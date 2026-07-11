@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="https://rigvedrs.github.io/torchxai.github.io/">Documentation</a> •
+  <a href="https://rigvedrs.github.io/torchxai/">Documentation</a> •
   <a href="#-quickstart">Quickstart</a> •
   <a href="#-installation">Installation</a> •
   <a href="#-methods">Methods</a> •

@@ -3,6 +3,7 @@ site_description: >-
   Explain any PyTorch vision model in one line of code — GradCAM, EigenCAM,
   Attention Rollout and 7 more methods for CNNs, ViTs, YOLO, DETR and DINO.
 site_author: Rigved Shirvalkar
+site_url: https://rigvedrs.github.io/torchxai/
 repo_url: https://github.com/rigvedrs/torchxai
 repo_name: rigvedrs/torchxai
 edit_uri: ""

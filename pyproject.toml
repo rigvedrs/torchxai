@@ -90,7 +90,7 @@ all = [
 
 [project.urls]
 Homepage = "https://github.com/rigvedrs/torchxai"
-Documentation = "https://rigvedrs.github.io/torchxai.github.io"
+Documentation = "https://rigvedrs.github.io/torchxai"
 Repository = "https://github.com/rigvedrs/torchxai"
 "Bug Tracker" = "https://github.com/rigvedrs/torchxai/issues"
 Changelog = "https://github.com/rigvedrs/torchxai/blob/main/CHANGELOG.md"
