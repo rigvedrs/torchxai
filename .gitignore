@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing & Coverage
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Type checking
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Assets (generated)
+assets/*.png
+assets/*.jpg
+assets/*.gif
+!assets/.gitkeep
+
+# Model weights (downloaded at runtime — never commit)
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# Internal planning docs (not part of the public repo)
+marketing/
+research/
+GITHUB_SETUP.md
+
+# Docs site build output
+site/
+
+# Local tooling
+.claude/
+.ruff_cache/

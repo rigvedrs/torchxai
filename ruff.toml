@@ -1,0 +1,49 @@
+line-length = 100
+target-version = "py39"
+
+[lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+]
+ignore = [
+    "E501",  # Line too long — handled by formatter with line-length = 100
+    "B008",  # Do not perform function calls in default argument values
+    "B905",  # `zip()` without an explicit `strict=` parameter (requires Python 3.10+)
+    "UP007", # X | Y unions require Python 3.10+ at runtime in some positions
+    "UP045", # Optional[X] -> X | None, same reason as UP007
+    "E402",  # Imports after matplotlib.use("Agg") are intentional
+    "E731",  # Lambda assignments are fine for small callbacks
+    "E741",  # Single-letter math variable names (I for identity matrix)
+    "F401",  # Re-exports in __init__ / optional imports
+    "F841",  # Assigned-but-unused intermediates kept for readability
+    "B007",  # Unused loop variables in enumerate() patterns
+    "B011",  # assert False used deliberately in test helpers
+    "B023",  # Loop-variable closures reviewed case by case
+    "B028",  # warnings.warn without stacklevel
+    "B904",  # raise-without-from in compatibility shims
+]
+
+[lint.isort]
+known-first-party = ["torchxai"]
+force-sort-within-sections = true
+split-on-trailing-comma = true
+
+[lint.per-file-ignores]
+"tests/**/*.py" = [
+    "S101",  # Use of assert is fine in tests
+    "ANN",   # Type annotations not required in tests
+]
+"docs/**/*.py" = [
+    "INP001",  # Not a package
+]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

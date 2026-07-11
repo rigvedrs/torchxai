@@ -1,0 +1,124 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "torchxai-explain"
+version = "0.1.0"
+description = "Explainability and saliency maps for PyTorch vision models — GradCAM, EigenCAM, Attention Rollout for CNNs, Vision Transformers (ViT), CLIP, YOLO, DETR, DINO, and SAM. One-line API with auto-detection."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Rigved Shirvalkar"},
+]
+keywords = [
+    # Core functionality
+    "explainability",
+    "interpretability",
+    "xai",
+    "explainable-ai",
+    "saliency-map",
+    "saliency",
+    "heatmap",
+    "class-activation-map",
+    # Methods
+    "gradcam",
+    "grad-cam",
+    "eigencam",
+    "layercam",
+    "attention-rollout",
+    "cam",
+    # Architectures
+    "vision-transformer",
+    "vit",
+    "clip",
+    "sam",
+    "yolo",
+    "detr",
+    "dino",
+    "swin-transformer",
+    "deit",
+    # Domain
+    "computer-vision",
+    "pytorch",
+    "deep-learning",
+    "image-classification",
+    "object-detection",
+    "feature-attribution",
+    "model-interpretability",
+    "attention-visualization",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+dependencies = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "numpy>=1.24.0",
+    "Pillow>=9.0.0",
+    "matplotlib>=3.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+]
+timm = ["timm>=0.9.0"]
+transformers = ["transformers>=4.30.0"]
+all = [
+    "timm>=0.9.0",
+    "transformers>=4.30.0",
+    "opencv-python>=4.8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/rigvedrs/torchxai"
+Documentation = "https://rigvedrs.github.io/torchxai.github.io"
+Repository = "https://github.com/rigvedrs/torchxai"
+"Bug Tracker" = "https://github.com/rigvedrs/torchxai/issues"
+Changelog = "https://github.com/rigvedrs/torchxai/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+include = ["torchxai*"]
+
+[tool.ruff]
+# Config lives in ruff.toml
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short --strict-markers"
+markers = [
+    "slow: marks tests as slow (deselect with '-m not slow')",
+    "gpu: marks tests that require a CUDA GPU",
+    "integration: marks end-to-end integration tests",
+]
+
+[tool.coverage.run]
+source = ["torchxai"]
+omit = ["tests/*", "docs/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "pass",
+]
