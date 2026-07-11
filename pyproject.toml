@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "torchxai-explain"
-version = "0.1.0"
+version = "0.3.0"
 description = "Explainability and saliency maps for PyTorch vision models — GradCAM, EigenCAM, Attention Rollout for CNNs, Vision Transformers (ViT), CLIP, YOLO, DETR, DINO, and SAM. One-line API with auto-detection."
 readme = "README.md"
 license = {text = "MIT"}

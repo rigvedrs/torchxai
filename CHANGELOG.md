@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased] — 2026-07-11
+## [0.3.0] — 2026-07-11
 
 ### Fixed — correctness of heatmaps across model families
 
@@ -154,5 +154,6 @@ Initial public release.
 
 ---
 
+[0.3.0]: https://github.com/rigvedrs/torchxai/releases/tag/v0.3.0
 [0.2.0]: https://github.com/rigvedrs/torchxai/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/rigvedrs/torchxai/releases/tag/v0.1.0
