@@ -1,5 +1,7 @@
 """
-Comprehensive integration tests for torchxai.
+Comprehensive integration checks for torchxai (script, not pytest).
+
+Run directly:  python tests/integration_full.py
 
 Tests every feature end-to-end with real models (ResNet18, ViT).
 Not mocked — these exercise the actual computation pipeline.
