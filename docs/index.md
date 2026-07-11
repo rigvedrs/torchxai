@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/hero_explanation.png" alt="torchxai — One line to explain any vision model" width="100%">
+  <img src="assets/hero_explanation.png" alt="torchxai — One line to explain any vision model" width="100%">
 </p>
 
 <h1 align="center">torchxai</h1>
@@ -12,18 +12,17 @@
 <p align="center">
   <a href="https://pypi.org/project/torchxai-explain/"><img src="https://img.shields.io/pypi/v/torchxai-explain?color=blue" alt="PyPI"></a>
   <a href="https://pypi.org/project/torchxai-explain/"><img src="https://img.shields.io/pypi/pyversions/torchxai-explain" alt="Python"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
+  <a href="https://github.com/rigvedrs/torchxai/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
   <a href="https://github.com/rigvedrs/torchxai/stargazers"><img src="https://img.shields.io/github/stars/rigvedrs/torchxai?style=social" alt="Stars"></a>
 </p>
 
 <p align="center">
-  <a href="https://rigvedrs.github.io/torchxai.github.io/">Documentation</a> •
   <a href="#-quickstart">Quickstart</a> •
   <a href="#-installation">Installation</a> •
   <a href="#-methods">Methods</a> •
   <a href="#-examples">Examples</a> •
-  <a href="docs/api-reference.md">API Reference</a> •
-  <a href="docs/troubleshooting.md">Troubleshooting</a>
+  <a href="api-reference.md">API Reference</a> •
+  <a href="troubleshooting.md">Troubleshooting</a>
 </p>
 
 ---
@@ -40,7 +39,7 @@ heatmap = explain(model, "photo.jpg")
 That's it. It works with **any** PyTorch vision model — ResNet, ViT, EfficientNet, CLIP, YOLO, Swin, DeiT, DINO, and more. No config files. No architecture-specific code. No boilerplate.
 
 <p align="center">
-  <img src="docs/assets/quickstart_workflow.png" alt="Quick-start workflow" width="100%">
+  <img src="assets/quickstart_workflow.png" alt="Quick-start workflow" width="100%">
 </p>
 
 ### What makes it different
@@ -81,7 +80,7 @@ show_explanation(Image.open("dog.jpg"), heatmap, title="What the model sees")
 ```
 
 <p align="center">
-  <img src="docs/assets/hero_explanation.png" alt="Explanation output" width="85%">
+  <img src="assets/hero_explanation.png" alt="Explanation output" width="85%">
 </p>
 
 ### Compare methods side by side
@@ -100,7 +99,7 @@ create_comparison(Image.open("dog.jpg"), heatmaps, save_path="comparison.png")
 ```
 
 <p align="center">
-  <img src="docs/assets/method_comparison.png" alt="Method comparison" width="100%">
+  <img src="assets/method_comparison.png" alt="Method comparison" width="100%">
 </p>
 
 ---
@@ -140,12 +139,12 @@ torchxai includes 10 explainability methods. Each produces a saliency heatmap sh
 | **Transformer Attribution** | Gradient + Attention | ✅ | Class-specific ViT explanation |
 
 <p align="center">
-  <img src="docs/assets/method_comparison.png" alt="All methods compared" width="100%">
+  <img src="assets/method_comparison.png" alt="All methods compared" width="100%">
 </p>
 
 **Don't know which to pick?** Just use `explain(model, image)` — it auto-selects the best method for your model architecture.
 
-→ [Detailed method guide with math and intuition](docs/methods.md)
+→ [Detailed method guide with math and intuition](methods.md)
 
 ---
 
@@ -179,7 +178,7 @@ heatmap_collar = explain(model, img, target_class=457)    # Bow tie
 ```
 
 <p align="center">
-  <img src="docs/assets/class_specific.png" alt="Class-specific explanations" width="100%">
+  <img src="assets/class_specific.png" alt="Class-specific explanations" width="100%">
 </p>
 
 ### Customizable visualization
@@ -200,13 +199,13 @@ save_heatmap(heatmap, "heatmap.png", colormap="viridis")
 **Colormap options:**
 
 <p align="center">
-  <img src="docs/assets/colormap_options.png" alt="Colormap options" width="100%">
+  <img src="assets/colormap_options.png" alt="Colormap options" width="100%">
 </p>
 
 **Transparency control:**
 
 <p align="center">
-  <img src="docs/assets/alpha_options.png" alt="Transparency options" width="100%">
+  <img src="assets/alpha_options.png" alt="Transparency options" width="100%">
 </p>
 
 ### Quantitative metrics
@@ -292,7 +291,7 @@ for method in ["gradcam", "eigencam", "layercam", "gradcam_pp"]:
 create_comparison(image, results, save_path="all_methods.png")
 ```
 
-→ [More examples](examples/)
+→ [More examples](https://github.com/rigvedrs/torchxai/tree/main/examples)
 
 ---
 
@@ -300,19 +299,19 @@ create_comparison(image, results, save_path="all_methods.png")
 
 | Document | Description |
 |----------|-------------|
-| [Getting Started](docs/getting-started.md) | Installation, first explanation in 60 seconds |
-| [API Reference](docs/api-reference.md) | Every function, every parameter, return types |
-| [Methods Guide](docs/methods.md) | How each method works, when to use which |
-| [Advanced Usage](docs/advanced.md) | Custom layers, metrics, deployment, optimization |
-| [Troubleshooting](docs/troubleshooting.md) | Common errors with exact fixes |
-| [Model Compatibility](docs/model-compatibility.md) | Tested models with proof images |
-| [Contributing](CONTRIBUTING.md) | How to contribute |
+| [Getting Started](getting-started.md) | Installation, first explanation in 60 seconds |
+| [API Reference](api-reference.md) | Every function, every parameter, return types |
+| [Methods Guide](methods.md) | How each method works, when to use which |
+| [Advanced Usage](advanced.md) | Custom layers, metrics, deployment, optimization |
+| [Troubleshooting](troubleshooting.md) | Common errors with exact fixes |
+| [Model Compatibility](model-compatibility.md) | Tested models with proof images |
+| [Contributing](https://github.com/rigvedrs/torchxai/blob/main/CONTRIBUTING.md) | How to contribute |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions are welcome. See [CONTRIBUTING.md](https://github.com/rigvedrs/torchxai/blob/main/CONTRIBUTING.md) for guidelines.
 
 ```bash
 git clone https://github.com/rigvedrs/torchxai.git
@@ -325,7 +324,7 @@ pytest tests/ -v
 
 ## 📄 License
 
-MIT License. See [LICENSE](LICENSE) for details.
+MIT License. See [LICENSE](https://github.com/rigvedrs/torchxai/blob/main/LICENSE) for details.
 
 ---
 

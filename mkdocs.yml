@@ -1,0 +1,61 @@
+site_name: torchxai
+site_description: >-
+  Explain any PyTorch vision model in one line of code — GradCAM, EigenCAM,
+  Attention Rollout and 7 more methods for CNNs, ViTs, YOLO, DETR and DINO.
+site_author: Rigved Shirvalkar
+repo_url: https://github.com/rigvedrs/torchxai
+repo_name: rigvedrs/torchxai
+edit_uri: ""
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - search.suggest
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Methods Guide: methods.md
+  - Model Compatibility: model-compatibility.md
+  - API Reference: api-reference.md
+  - Advanced Usage: advanced.md
+  - Troubleshooting: troubleshooting.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/rigvedrs/torchxai
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/torchxai-explain/
