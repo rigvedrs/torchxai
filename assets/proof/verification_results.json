@@ -1,0 +1,447 @@
+{
+ "resnet50": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 22.4,
+   "ms": 81
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 417668.19,
+   "ms": 171
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 15.75,
+   "ms": 61
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 15.96,
+   "ms": 58
+  },
+  "scorecam": {
+   "verdict": "OK",
+   "ratio": 40.35,
+   "ms": 2274
+  }
+ },
+ "vgg16": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 3.45,
+   "ms": 420
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 24.13,
+   "ms": 278
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 1.92,
+   "ms": 176
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 4.14,
+   "ms": 157
+  },
+  "scorecam": {
+   "verdict": "OK",
+   "ratio": 17.87,
+   "ms": 2113
+  }
+ },
+ "efficientnet_b0": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 12.52,
+   "ms": 616
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 411925.84,
+   "ms": 873
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 7.22,
+   "ms": 614
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 7.99,
+   "ms": 613
+  },
+  "scorecam": {
+   "verdict": "OK",
+   "ratio": 4.55,
+   "ms": 7139
+  }
+ },
+ "efficientnetv2_s": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 310818.69,
+   "ms": 2525
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 70.72,
+   "ms": 456
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 61.63,
+   "ms": 3773
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 246463.47,
+   "ms": 4094
+  }
+ },
+ "mobilenetv3_small": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 1306.9,
+   "ms": 421
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 372071.72,
+   "ms": 315
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 3.58,
+   "ms": 177
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 3.47,
+   "ms": 178
+  },
+  "scorecam": {
+   "verdict": "OK",
+   "ratio": 6.61,
+   "ms": 2408
+  }
+ },
+ "mobilenetv4_small": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 2.16,
+   "ms": 563
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 261362.34,
+   "ms": 101
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 5.57,
+   "ms": 298
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 5.74,
+   "ms": 296
+  }
+ },
+ "convnext_tiny": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 325.13,
+   "ms": 2153
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 509786.97,
+   "ms": 1437
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 25.11,
+   "ms": 2127
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 164237.23,
+   "ms": 2121
+  }
+ },
+ "convnext_v2": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 63.25,
+   "ms": 2132
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 440594.28,
+   "ms": 1367
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 17.17,
+   "ms": 2207
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 19.09,
+   "ms": 2110
+  },
+  "scorecam": {
+   "verdict": "OK",
+   "ratio": 4.28,
+   "ms": 10676
+  }
+ },
+ "convnext_zepto": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 304331.47,
+   "ms": 308
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 152011.44,
+   "ms": 236
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 249681.75,
+   "ms": 288
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 246429.78,
+   "ms": 293
+  }
+ },
+ "regnety_400mf": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 20.96,
+   "ms": 175
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 374944.25,
+   "ms": 133
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 16.49,
+   "ms": 93
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 14.14,
+   "ms": 96
+  }
+ },
+ "repvgg_b0": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 5.9,
+   "ms": 65
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 271195.44,
+   "ms": 44
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 4.81,
+   "ms": 71
+  },
+  "gradcam_pp": {
+   "verdict": "OK",
+   "ratio": 4.87,
+   "ms": 70
+  }
+ },
+ "ghostnetv3": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 433.57,
+   "ms": 4091
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 411495.72,
+   "ms": 2627
+  }
+ },
+ "efficientnet_h_b5": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 33.71,
+   "ms": 7043
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 12.27,
+   "ms": 6450
+  }
+ },
+ "densenet121": {
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 398645.19,
+   "ms": 235
+  },
+  "scorecam": {
+   "verdict": "OK",
+   "ratio": 3.39,
+   "ms": 2047
+  }
+ },
+ "vit_tiny_16": {
+  "gradcam": {
+   "verdict": "INVERTED",
+   "ratio": 0.73,
+   "ms": 71
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 6.1,
+   "ms": 43
+  },
+  "attention_rollout": {
+   "verdict": "OK",
+   "ratio": 1.67,
+   "ms": 42
+  },
+  "transformer_attribution": {
+   "verdict": "OK",
+   "ratio": 1.7,
+   "ms": 34
+  }
+ },
+ "deit_tiny_16": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 5.94,
+   "ms": 62
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 30.43,
+   "ms": 49
+  },
+  "attention_rollout": {
+   "verdict": "OK",
+   "ratio": 2.89,
+   "ms": 43
+  },
+  "transformer_attribution": {
+   "verdict": "OK",
+   "ratio": 2.7,
+   "ms": 35
+  }
+ },
+ "swin_tiny": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 15.05,
+   "ms": 198
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 479419.34,
+   "ms": 159
+  },
+  "layercam": {
+   "verdict": "OK",
+   "ratio": 12.26,
+   "ms": 183
+  }
+ },
+ "eva_02_base": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 1.79,
+   "ms": 1271
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 11.26,
+   "ms": 973
+  }
+ },
+ "maxvit_tiny": {
+  "gradcam": {
+   "verdict": "OK",
+   "ratio": 2.86,
+   "ms": 1472
+  },
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 4.8,
+   "ms": 965
+  }
+ },
+ "dinov2_vit_s14": {
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 3.91,
+   "ms": 132
+  },
+  "attention_rollout": {
+   "verdict": "WEAK",
+   "ratio": 0.92,
+   "ms": 88
+  }
+ },
+ "input_level": {
+  "smoothgrad": {
+   "verdict": "OK",
+   "ratio": 3.89,
+   "ms": 4393
+  },
+  "integrated_gradients": {
+   "verdict": "OK",
+   "ratio": 4.71,
+   "ms": 4355
+  },
+  "rise": {
+   "verdict": "OK",
+   "ratio": 3.24,
+   "ms": 217240
+  }
+ },
+ "yolo26n": {
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 445606.0
+  },
+  "detections": 1
+ },
+ "yolo11n": {
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 414101.88
+  },
+  "detections": 1
+ },
+ "yolov8n": {
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 247.07
+  },
+  "detections": 1
+ },
+ "rfdetr": {
+  "eigencam": {
+   "verdict": "OK",
+   "ratio": 191810.17
+  },
+  "detections": 1
+ }
+}

@@ -1,0 +1,2228 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Explain any PyTorch vision model in one line of code — GradCAM, EigenCAM, Attention Rollout and 7 more methods for CNNs, ViTs, YOLO, DETR and DINO.">
+      
+      
+        <meta name="author" content="Rigved Shirvalkar">
+      
+      
+        <link rel="canonical" href="https://rigvedrs.github.io/torchxai/model-compatibility/">
+      
+      
+        <link rel="prev" href="../methods/">
+      
+      
+        <link rel="next" href="../api-reference/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Model Compatibility - torchxai</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#model-compatibility-20-model-families-4-detectors-all-verified" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="torchxai" class="md-header__button md-logo" aria-label="torchxai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            torchxai
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Model Compatibility
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rigvedrs/torchxai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rigvedrs/torchxai
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="torchxai" class="md-nav__button md-logo" aria-label="torchxai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    torchxai
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rigvedrs/torchxai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rigvedrs/torchxai
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methods Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Compatibility
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#section-1-cnn-classifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 1: CNN Classifiers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Section 1: CNN Classifiers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-resnet50-torchvision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ResNet50 (torchvision)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vgg16-torchvision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. VGG16 (torchvision)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-efficientnet-b0-torchvision-efficientnetv2-s-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. EfficientNet-B0 (torchvision) &amp; EfficientNetV2-S (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mobilenetv3-small-torchvision-mobilenetv4-small-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. MobileNetV3-Small (torchvision) &amp; MobileNetV4-Small (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-convnext-family-tiny-torchvision-v2-tiny-timm-zepto-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. ConvNeXt family — Tiny (torchvision), V2 Tiny (timm), Zepto (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-regnety-400mf-torchvision-repvgg-b0-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. RegNetY-400MF (torchvision) &amp; RepVGG-B0 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-ghostnetv3-efficientnet-h-b5-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. GhostNetV3 &amp; EfficientNet-H B5 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-densenet121-torchvision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. DenseNet121 (torchvision)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-2-vision-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 2: Vision Transformers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Section 2: Vision Transformers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-vit-tiny16-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ViT-Tiny/16 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-deit-tiny16-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. DeiT-Tiny/16 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-swin-tiny-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Swin-Tiny (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-eva-02-base-448-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. EVA-02 Base @ 448 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-maxvit-tiny-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. MaxViT-Tiny (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-dinov2-vit-s14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. DINOv2 ViT-S/14
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-3-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 3: Object Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Section 3: Object Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#13-yolo26n-yolo11n-yolov8n-ultralytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1–3. YOLO26n / YOLO11n / YOLOv8n (Ultralytics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-rf-detr-base-roboflow-iclr-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. RF-DETR Base (Roboflow, ICLR 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-4-input-level-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 4: Input-Level Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-5-full-compatibility-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 5: Full Compatibility Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-6-how-to-reproduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 6: How to Reproduce
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#section-1-cnn-classifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 1: CNN Classifiers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Section 1: CNN Classifiers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-resnet50-torchvision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ResNet50 (torchvision)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vgg16-torchvision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. VGG16 (torchvision)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-efficientnet-b0-torchvision-efficientnetv2-s-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. EfficientNet-B0 (torchvision) &amp; EfficientNetV2-S (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mobilenetv3-small-torchvision-mobilenetv4-small-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. MobileNetV3-Small (torchvision) &amp; MobileNetV4-Small (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-convnext-family-tiny-torchvision-v2-tiny-timm-zepto-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. ConvNeXt family — Tiny (torchvision), V2 Tiny (timm), Zepto (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-regnety-400mf-torchvision-repvgg-b0-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. RegNetY-400MF (torchvision) &amp; RepVGG-B0 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-ghostnetv3-efficientnet-h-b5-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. GhostNetV3 &amp; EfficientNet-H B5 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-densenet121-torchvision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. DenseNet121 (torchvision)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-2-vision-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 2: Vision Transformers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Section 2: Vision Transformers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-vit-tiny16-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ViT-Tiny/16 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-deit-tiny16-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. DeiT-Tiny/16 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-swin-tiny-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Swin-Tiny (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-eva-02-base-448-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. EVA-02 Base @ 448 (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-maxvit-tiny-timm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. MaxViT-Tiny (timm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-dinov2-vit-s14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. DINOv2 ViT-S/14
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-3-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 3: Object Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Section 3: Object Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#13-yolo26n-yolo11n-yolov8n-ultralytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1–3. YOLO26n / YOLO11n / YOLOv8n (Ultralytics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-rf-detr-base-roboflow-iclr-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. RF-DETR Base (Roboflow, ICLR 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-4-input-level-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 4: Input-Level Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-5-full-compatibility-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 5: Full Compatibility Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-6-how-to-reproduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section 6: How to Reproduce
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="model-compatibility-20-model-families-4-detectors-all-verified">Model Compatibility — 20 Model Families + 4 Detectors, All Verified<a class="headerlink" href="#model-compatibility-20-model-families-4-detectors-all-verified" title="Permanent link">&para;</a></h1>
+<p>Every result on this page was generated with real pretrained models by
+<a href="https://github.com/rigvedrs/torchxai/blob/main/generate_proof_images.py"><code>generate_proof_images.py</code></a>. Each heatmap is
+also <strong>scored automatically</strong> against a foreground/background split of the
+test photo — a combination is only marked ✅ if its heatmap actually lands on
+the subject. Numbers below are CPU timings from the latest verification run;
+the raw scores live in <a href="../assets/proof/verification_results.json"><code>verification_results.json</code></a>.</p>
+<blockquote>
+<p>All proof images live in <a href="assets/proof/"><code>docs/assets/proof/</code></a>. Nothing is
+mocked or simulated — every heatmap was produced on the same Labrador
+Retriever photo (<a href="../assets/proof/original_dog.jpg"><code>original_dog.jpg</code></a>).</p>
+</blockquote>
+<p><img alt="Master grid — torchxai across 20 model families" src="../assets/proof/master_grid_final.png" /></p>
+<p><strong>Legend:</strong> ✅ verified (heatmap focuses on the subject) · ⚠️ known limitation
+(see notes) · — not applicable</p>
+<hr />
+<h2 id="section-1-cnn-classifiers">Section 1: CNN Classifiers<a class="headerlink" href="#section-1-cnn-classifiers" title="Permanent link">&para;</a></h2>
+<h3 id="1-resnet50-torchvision">1. ResNet50 (torchvision)<a class="headerlink" href="#1-resnet50-torchvision" title="Permanent link">&para;</a></h3>
+<p><img alt="ResNet50 — all 5 methods verified" src="../assets/proof/resnet50.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅</td>
+<td>81ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>171ms</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>✅</td>
+<td>61ms</td>
+</tr>
+<tr>
+<td>GradCAM++</td>
+<td>✅</td>
+<td>58ms</td>
+</tr>
+<tr>
+<td>ScoreCAM</td>
+<td>✅</td>
+<td>2,274ms</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>  <span class="c1"># Just works</span>
+</code></pre></div>
+<hr />
+<h3 id="2-vgg16-torchvision">2. VGG16 (torchvision)<a class="headerlink" href="#2-vgg16-torchvision" title="Permanent link">&para;</a></h3>
+<p>torchxai hooks the ReLU after the last convolution (post-activation,
+14×14) so every method — including activation-based ScoreCAM — sees
+non-negative feature maps at full resolution.</p>
+<p><img alt="VGG16 — all 5 methods verified" src="../assets/proof/vgg16.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅</td>
+<td>420ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>278ms</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>✅</td>
+<td>176ms</td>
+</tr>
+<tr>
+<td>GradCAM++</td>
+<td>✅</td>
+<td>157ms</td>
+</tr>
+<tr>
+<td>ScoreCAM</td>
+<td>✅</td>
+<td>2,113ms</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">vgg16</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="3-efficientnet-b0-torchvision-efficientnetv2-s-timm">3. EfficientNet-B0 (torchvision) &amp; EfficientNetV2-S (timm)<a class="headerlink" href="#3-efficientnet-b0-torchvision-efficientnetv2-s-timm" title="Permanent link">&para;</a></h3>
+<p><img alt="EfficientNet-B0 — all 5 methods verified" src="../assets/proof/efficientnet_b0.png" />
+<img alt="EfficientNetV2-S — 4 methods verified" src="../assets/proof/efficientnetv2_s.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>B0</th>
+<th>V2-S</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅ 616ms</td>
+<td>✅ 2,525ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅ 873ms</td>
+<td>✅ 456ms</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>✅ 614ms</td>
+<td>✅ 3,773ms</td>
+</tr>
+<tr>
+<td>GradCAM++</td>
+<td>✅ 613ms</td>
+<td>✅ 4,094ms</td>
+</tr>
+<tr>
+<td>ScoreCAM</td>
+<td>✅ 7,139ms</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">efficientnet_b0</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+
+<span class="c1"># timm variant</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">timm</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;efficientnetv2_rw_s.ra2_in1k&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="4-mobilenetv3-small-torchvision-mobilenetv4-small-timm">4. MobileNetV3-Small (torchvision) &amp; MobileNetV4-Small (timm)<a class="headerlink" href="#4-mobilenetv3-small-torchvision-mobilenetv4-small-timm" title="Permanent link">&para;</a></h3>
+<p>For timm's MobileNet family, <code>conv_head</code> runs <strong>after</strong> global pooling —
+hooking it yields a useless 1×1 map. torchxai automatically targets the
+last spatial block instead.</p>
+<p><img alt="MobileNetV3-Small — all 5 methods verified" src="../assets/proof/mobilenetv3_small.png" />
+<img alt="MobileNetV4-Small — 4 methods verified" src="../assets/proof/mobilenetv4_small.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>V3-Small</th>
+<th>V4-Small</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅ 421ms</td>
+<td>✅ 563ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅ 315ms</td>
+<td>✅ 101ms</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>✅ 177ms</td>
+<td>✅ 298ms</td>
+</tr>
+<tr>
+<td>GradCAM++</td>
+<td>✅ 178ms</td>
+<td>✅ 296ms</td>
+</tr>
+<tr>
+<td>ScoreCAM</td>
+<td>✅ 2,408ms</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">mobilenet_v3_small</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;mobilenetv4_conv_small.e2400_r224_in1k&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="5-convnext-family-tiny-torchvision-v2-tiny-timm-zepto-timm">5. ConvNeXt family — Tiny (torchvision), V2 Tiny (timm), Zepto (timm)<a class="headerlink" href="#5-convnext-family-tiny-torchvision-v2-tiny-timm-zepto-timm" title="Permanent link">&para;</a></h3>
+<p>ConvNeXt places LayerNorm between the feature maps and the classifier, so
+gradient-weighted CAMs have an ambiguous sign. torchxai resolves the
+polarity with an insertion/deletion confidence test, so the heatmaps stay
+on the subject.</p>
+<p><img alt="ConvNeXt-Tiny — 4 methods verified" src="../assets/proof/convnext_tiny.png" />
+<img alt="ConvNeXt V2 Tiny — all 5 methods verified" src="../assets/proof/convnext_v2.png" />
+<img alt="ConvNeXt-Zepto — 4 methods verified" src="../assets/proof/convnext_zepto.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Tiny</th>
+<th>V2 Tiny</th>
+<th>Zepto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅ 2,153ms</td>
+<td>✅ 2,132ms</td>
+<td>✅ 308ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅ 1,437ms</td>
+<td>✅ 1,367ms</td>
+<td>✅ 236ms</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>✅ 2,127ms</td>
+<td>✅ 2,207ms</td>
+<td>✅ 288ms</td>
+</tr>
+<tr>
+<td>GradCAM++</td>
+<td>✅ 2,121ms</td>
+<td>✅ 2,110ms</td>
+<td>✅ 293ms</td>
+</tr>
+<tr>
+<td>ScoreCAM</td>
+<td>—</td>
+<td>✅ 10,676ms</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">convnext_tiny</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;convnextv2_tiny.fcmae_ft_in22k_in1k&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="6-regnety-400mf-torchvision-repvgg-b0-timm">6. RegNetY-400MF (torchvision) &amp; RepVGG-B0 (timm)<a class="headerlink" href="#6-regnety-400mf-torchvision-repvgg-b0-timm" title="Permanent link">&para;</a></h3>
+<p><img alt="RegNetY-400MF — 4 methods verified" src="../assets/proof/regnety_400mf.png" />
+<img alt="RepVGG-B0 — 4 methods verified" src="../assets/proof/repvgg_b0.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>RegNetY</th>
+<th>RepVGG</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅ 175ms</td>
+<td>✅ 65ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅ 133ms</td>
+<td>✅ 44ms</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>✅ 93ms</td>
+<td>✅ 71ms</td>
+</tr>
+<tr>
+<td>GradCAM++</td>
+<td>✅ 96ms</td>
+<td>✅ 70ms</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="7-ghostnetv3-efficientnet-h-b5-timm">7. GhostNetV3 &amp; EfficientNet-H B5 (timm)<a class="headerlink" href="#7-ghostnetv3-efficientnet-h-b5-timm" title="Permanent link">&para;</a></h3>
+<p><img alt="GhostNetV3 — 2 methods verified" src="../assets/proof/ghostnetv3.png" />
+<img alt="EfficientNet-H B5 — 2 methods verified" src="../assets/proof/efficientnet_h_b5.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>GhostNetV3</th>
+<th>EfficientNet-H B5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅ 4,091ms</td>
+<td>✅ 7,043ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅ 2,627ms</td>
+<td>✅ 6,450ms</td>
+</tr>
+</tbody>
+</table>
+<p>EfficientNet-H B5 runs at its native 448×448 input — torchxai reads the
+expected input size from the model, no manual configuration needed.</p>
+<hr />
+<h3 id="8-densenet121-torchvision">8. DenseNet121 (torchvision)<a class="headerlink" href="#8-densenet121-torchvision" title="Permanent link">&para;</a></h3>
+<p>Gradient-based methods hit a known PyTorch backward-hook conflict with
+DenseNet's in-place operations. Use the gradient-free methods.</p>
+<p><img alt="DenseNet121 — compatible methods" src="../assets/proof/densenet121.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>⚠️</td>
+<td>—</td>
+<td>PyTorch backward hook + view tensor conflict</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>235ms</td>
+<td>Recommended for DenseNet</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>⚠️</td>
+<td>—</td>
+<td>Same as GradCAM</td>
+</tr>
+<tr>
+<td>GradCAM++</td>
+<td>⚠️</td>
+<td>—</td>
+<td>Same as GradCAM</td>
+</tr>
+<tr>
+<td>ScoreCAM</td>
+<td>✅</td>
+<td>2,047ms</td>
+<td>Gradient-free; works correctly</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">densenet121</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;eigencam&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="section-2-vision-transformers">Section 2: Vision Transformers<a class="headerlink" href="#section-2-vision-transformers" title="Permanent link">&para;</a></h2>
+<p>torchxai captures real attention matrices from timm models (it temporarily
+disables fused scaled-dot-product attention during the hooked forward pass),
+so Attention Rollout and Transformer Attribution run genuinely — they no
+longer silently fall back to activation-based methods.</p>
+<h3 id="1-vit-tiny16-timm">1. ViT-Tiny/16 (timm)<a class="headerlink" href="#1-vit-tiny16-timm" title="Permanent link">&para;</a></h3>
+<p><img alt="ViT-Tiny/16 — methods verified" src="../assets/proof/vit_tiny_16.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>⚠️</td>
+<td>71ms</td>
+<td>Noisy on very small ViTs — prefer the methods below</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>43ms</td>
+<td>Segments the full subject</td>
+</tr>
+<tr>
+<td>Attention Rollout</td>
+<td>✅</td>
+<td>42ms</td>
+<td>Auto-selected default for ViTs</td>
+</tr>
+<tr>
+<td>Transformer Attribution</td>
+<td>✅</td>
+<td>34ms</td>
+<td>Class-specific</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;vit_tiny_patch16_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>  <span class="c1"># auto-selects attention rollout</span>
+</code></pre></div>
+<hr />
+<h3 id="2-deit-tiny16-timm">2. DeiT-Tiny/16 (timm)<a class="headerlink" href="#2-deit-tiny16-timm" title="Permanent link">&para;</a></h3>
+<p><img alt="DeiT-Tiny/16 — all 4 methods verified" src="../assets/proof/deit_tiny_16.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅</td>
+<td>62ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>49ms</td>
+</tr>
+<tr>
+<td>Attention Rollout</td>
+<td>✅</td>
+<td>43ms</td>
+</tr>
+<tr>
+<td>Transformer Attribution</td>
+<td>✅</td>
+<td>35ms</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="3-swin-tiny-timm">3. Swin-Tiny (timm)<a class="headerlink" href="#3-swin-tiny-timm" title="Permanent link">&para;</a></h3>
+<p>Shifted-window attention — hierarchical patches, not global. Window
+attention cannot be rolled out globally, so gradient/activation CAMs are
+the supported methods (rollout falls back to EigenCAM with a warning).</p>
+<p><img alt="Swin-Tiny — 3 methods verified" src="../assets/proof/swin_tiny.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅</td>
+<td>198ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>159ms</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>✅</td>
+<td>183ms</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="4-eva-02-base-448-timm">4. EVA-02 Base @ 448 (timm)<a class="headerlink" href="#4-eva-02-base-448-timm" title="Permanent link">&para;</a></h3>
+<p>torchxai reads the 448×448 input size from the model automatically and
+derives the token grid from the actual sequence length, so the 32×32
+patch grid needs no manual configuration.</p>
+<p><img alt="EVA-02 Base — 2 methods verified" src="../assets/proof/eva_02_base.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅</td>
+<td>1,271ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>973ms</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;eva02_base_patch14_448.mim_in22k_ft_in22k_in1k&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>  <span class="c1"># input size auto-resolved to 448</span>
+</code></pre></div>
+<hr />
+<h3 id="5-maxvit-tiny-timm">5. MaxViT-Tiny (timm)<a class="headerlink" href="#5-maxvit-tiny-timm" title="Permanent link">&para;</a></h3>
+<p>Multi-axis attention hybrid. torchxai hooks the full final block (matching
+the pytorch-grad-cam reference), not an internal sub-module.</p>
+<p><img alt="MaxViT-Tiny — 2 methods verified" src="../assets/proof/maxvit_tiny.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>✅</td>
+<td>1,472ms</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>965ms</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>⚠️</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="6-dinov2-vit-s14">6. DINOv2 ViT-S/14<a class="headerlink" href="#6-dinov2-vit-s14" title="Permanent link">&para;</a></h3>
+<p>DINOv2 ships without a classification head. Wrap it with a linear layer
+for <code>explain()</code> compatibility. <strong>EigenCAM is the auto-selected method</strong> —
+it segments the subject from the patch features and needs no trained head.</p>
+<p><img alt="DINOv2 ViT-S/14 — verified" src="../assets/proof/dinov2_vit_s14.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EigenCAM</td>
+<td>✅</td>
+<td>132ms</td>
+<td>Auto-selected; works with an untrained head</td>
+</tr>
+<tr>
+<td>Attention Rollout</td>
+<td>⚠️</td>
+<td>88ms</td>
+<td>Register-less DINOv2 has attention-sink artifacts that hollow out rollout maps</td>
+</tr>
+<tr>
+<td>GradCAM</td>
+<td>⚠️</td>
+<td>—</td>
+<td>Only meaningful with a <strong>trained</strong> classification head</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+
+<span class="n">backbone</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;facebookresearch/dinov2&quot;</span><span class="p">,</span> <span class="s2">&quot;dinov2_vits14&quot;</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DINOv2Classifier</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="n">backbone</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DINOv2Classifier</span><span class="p">(</span><span class="n">backbone</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>  <span class="c1"># auto-selects EigenCAM</span>
+</code></pre></div>
+<hr />
+<h2 id="section-3-object-detection">Section 3: Object Detection<a class="headerlink" href="#section-3-object-detection" title="Permanent link">&para;</a></h2>
+<p>Detection models are explained with EigenCAM on the backbone/neck features
+(gradients through detection heads are unreliable). torchxai auto-detects
+Ultralytics models and targets the last feature layer before the Detect head.</p>
+<h3 id="13-yolo26n-yolo11n-yolov8n-ultralytics">1–3. YOLO26n / YOLO11n / YOLOv8n (Ultralytics)<a class="headerlink" href="#13-yolo26n-yolo11n-yolov8n-ultralytics" title="Permanent link">&para;</a></h3>
+<p><img alt="YOLO26n — Original → Detections → EigenCAM" src="../assets/proof/yolo26n.png" />
+<img alt="YOLO11n — Original → Detections → EigenCAM" src="../assets/proof/yolo11n.png" />
+<img alt="YOLOv8n — Original → Detections → EigenCAM" src="../assets/proof/yolov8n.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Detections</th>
+<th>EigenCAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YOLO26n</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>YOLO11n</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>YOLOv8n</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">ultralytics</span><span class="w"> </span><span class="kn">import</span> <span class="n">YOLO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">yolo</span> <span class="o">=</span> <span class="n">YOLO</span><span class="p">(</span><span class="s2">&quot;yolo26n.pt&quot;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">yolo</span><span class="p">(</span><span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>                     <span class="c1"># detections</span>
+
+<span class="c1"># EigenCAM heatmap of the backbone features (auto-targeted)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">yolo</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;eigencam&quot;</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">640</span><span class="p">))</span>
+</code></pre></div>
+<p>For per-detection explanations (heatmap cropped/masked per bounding box):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.detection</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain_detection</span>
+
+<span class="n">explanations</span> <span class="o">=</span> <span class="n">explain_detection</span><span class="p">(</span><span class="n">yolo</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">explanations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">class_id</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">heatmap</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="4-rf-detr-base-roboflow-iclr-2026">4. RF-DETR Base (Roboflow, ICLR 2026)<a class="headerlink" href="#4-rf-detr-base-roboflow-iclr-2026" title="Permanent link">&para;</a></h3>
+<p>Detection <strong>and</strong> a real backbone heatmap, verified end-to-end.</p>
+<p><img alt="RF-DETR Base — detection + EigenCAM verified" src="../assets/proof/rfdetr.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rfdetr</span><span class="w"> </span><span class="kn">import</span> <span class="n">RFDETRBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RFDETRBase</span><span class="p">()</span>
+<span class="n">detections</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s2">&quot;dog.jpg&quot;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">core</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">model</span>  <span class="c1"># LWDETR nn.Module</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">core</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;eigencam&quot;</span><span class="p">,</span>
+                  <span class="n">target_layer</span><span class="o">=</span><span class="n">core</span><span class="o">.</span><span class="n">backbone</span><span class="p">,</span>
+                  <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="n">rf</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span> <span class="n">rf</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">resolution</span><span class="p">))</span>
+</code></pre></div>
+<hr />
+<h2 id="section-4-input-level-methods">Section 4: Input-Level Methods<a class="headerlink" href="#section-4-input-level-methods" title="Permanent link">&para;</a></h2>
+<p>SmoothGrad, Integrated Gradients, and RISE operate directly on pixel
+gradients rather than intermediate layer activations. They are
+architecture-agnostic — every model in this document is compatible.</p>
+<p><img alt="Input-level methods — SmoothGrad, Integrated Gradients, RISE on ResNet50" src="../assets/proof/input_level_methods.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Status</th>
+<th>Time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SmoothGrad</td>
+<td>✅</td>
+<td>~4s</td>
+<td>Averages gradients over 50 noisy copies</td>
+</tr>
+<tr>
+<td>Integrated Gradients</td>
+<td>✅</td>
+<td>~4s</td>
+<td>50-step path integral</td>
+</tr>
+<tr>
+<td>RISE</td>
+<td>✅</td>
+<td>~3.5min</td>
+<td>4,000 random mask samples — most thorough</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;smoothgrad&quot;</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;integrated_gradients&quot;</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;dog.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;rise&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="section-5-full-compatibility-matrix">Section 5: Full Compatibility Matrix<a class="headerlink" href="#section-5-full-compatibility-matrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: center;">GradCAM</th>
+<th style="text-align: center;">EigenCAM</th>
+<th style="text-align: center;">LayerCAM</th>
+<th style="text-align: center;">GradCAM++</th>
+<th style="text-align: center;">ScoreCAM</th>
+<th style="text-align: center;">Attn Rollout</th>
+<th style="text-align: center;">Transf. Attr</th>
+<th style="text-align: center;">SmoothGrad</th>
+<th style="text-align: center;">Int. Grads</th>
+<th style="text-align: center;">RISE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ResNet50</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>VGG16</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>EfficientNet-B0</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>EfficientNetV2-S</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>MobileNetV3-Small</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>MobileNetV4-Small</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>ConvNeXt-Tiny</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>ConvNeXt V2 Tiny</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>ConvNeXt-Zepto</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>RegNetY-400MF</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>RepVGG-B0</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>GhostNetV3</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>EfficientNet-H B5</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>DenseNet121</strong></td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>ViT-Tiny/16</strong></td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>DeiT-Tiny/16</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>Swin-Tiny</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>EVA-02 Base</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>MaxViT-Tiny</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>DINOv2 ViT-S/14</strong></td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">⚠️</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td><strong>YOLO26n / YOLO11n / YOLOv8n</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td><strong>RF-DETR Base</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Legend:</strong> ✅ verified against the automated foreground check · ⚠️ known
+limitation (see model notes) · — not applicable / not verified for this
+architecture</p>
+<hr />
+<h2 id="section-6-how-to-reproduce">Section 6: How to Reproduce<a class="headerlink" href="#section-6-how-to-reproduce" title="Permanent link">&para;</a></h2>
+<p>Every proof image on this page is generated by
+<a href="https://github.com/rigvedrs/torchxai/blob/main/generate_proof_images.py"><code>generate_proof_images.py</code></a> in the project
+root, using real pretrained weights and the same Labrador Retriever input
+image. The script also writes
+<a href="../assets/proof/verification_results.json"><code>verification_results.json</code></a> with a
+pass/fail verdict for every model × method combination and <strong>fails loudly</strong>
+if any heatmap goes flat, inverts onto the background, or crashes.</p>
+<p><strong>Install dependencies:</strong></p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>torchxai-explain
+pip<span class="w"> </span>install<span class="w"> </span>timm<span class="w">            </span><span class="c1"># timm model families</span>
+pip<span class="w"> </span>install<span class="w"> </span>ultralytics<span class="w">     </span><span class="c1"># YOLO26n, YOLO11n, YOLOv8n (optional)</span>
+pip<span class="w"> </span>install<span class="w"> </span>rfdetr<span class="w">          </span><span class="c1"># RF-DETR Base (optional)</span>
+</code></pre></div>
+<p><strong>Run the full proof suite:</strong></p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>generate_proof_images.py<span class="w">            </span><span class="c1"># everything (~30 min on CPU)</span>
+python<span class="w"> </span>generate_proof_images.py<span class="w"> </span>--skip-slow<span class="w">    </span><span class="c1"># skip ScoreCAM + RISE</span>
+python<span class="w"> </span>generate_proof_images.py<span class="w"> </span>--only<span class="w"> </span>resnet50,vit_tiny_16
+python<span class="w"> </span>generate_proof_images.py<span class="w"> </span>--strict<span class="w">   </span><span class="c1"># non-zero exit if any check fails</span>
+</code></pre></div>
+<p>Output images are saved to <code>docs/assets/proof/</code>. The master grid is
+regenerated automatically at <code>docs/assets/proof/master_grid_final.png</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../methods/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Methods Guide">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Methods Guide
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../api-reference/" class="md-footer__link md-footer__link--next" aria-label="Next: API Reference">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                API Reference
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rigvedrs/torchxai" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/torchxai-explain/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3394 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Explain any PyTorch vision model in one line of code — GradCAM, EigenCAM, Attention Rollout and 7 more methods for CNNs, ViTs, YOLO, DETR and DINO.">
+      
+      
+        <meta name="author" content="Rigved Shirvalkar">
+      
+      
+        <link rel="canonical" href="https://rigvedrs.github.io/torchxai/api-reference/">
+      
+      
+        <link rel="prev" href="../model-compatibility/">
+      
+      
+        <link rel="next" href="../advanced/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>API Reference - torchxai</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#torchxai-api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="torchxai" class="md-header__button md-logo" aria-label="torchxai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            torchxai
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rigvedrs/torchxai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rigvedrs/torchxai
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="torchxai" class="md-nav__button md-logo" aria-label="torchxai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    torchxai
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rigvedrs/torchxai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rigvedrs/torchxai
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methods Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-core-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Core API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Core API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        explain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explainer-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Explainer Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Explainer Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baseexplainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BaseExplainer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseExplainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__call__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __call__
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__repr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __repr__
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradcam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradCAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eigencam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EigenCAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layercam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LayerCAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradcamplusplus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradCAMPlusPlus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attentionrollout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AttentionRollout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformerattribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TransformerAttribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-visualization-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Visualization Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Visualization Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overlay_heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        overlay_heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        show_explanation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save_heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save_heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insertion_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        insertion_score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deletion_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        deletion_score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stability_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stability_score
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-utility-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Utility Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Utility Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preprocess_image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        preprocess_image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tensor_to_numpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tensor_to_numpy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#denormalize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        denormalize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalize_heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalize_heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-model-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Model Registry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Model Registry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detect_architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        detect_architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve_target_layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve_target_layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_attention_layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_attention_layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-hook-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Hook Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Hook Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activationhook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ActivationHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradienthook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradientHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multihook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MultiHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attentionhook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AttentionHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-core-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Core API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Core API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        explain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explainer-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Explainer Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Explainer Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baseexplainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BaseExplainer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseExplainer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__call__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __call__
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__repr__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __repr__
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradcam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradCAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eigencam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EigenCAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layercam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LayerCAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradcamplusplus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradCAMPlusPlus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attentionrollout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AttentionRollout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformerattribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TransformerAttribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-visualization-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Visualization Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Visualization Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overlay_heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        overlay_heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        show_explanation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save_heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save_heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insertion_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        insertion_score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deletion_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        deletion_score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stability_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stability_score
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-utility-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Utility Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Utility Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preprocess_image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        preprocess_image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tensor_to_numpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tensor_to_numpy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#denormalize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        denormalize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalize_heatmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalize_heatmap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-model-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Model Registry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Model Registry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detect_architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        detect_architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve_target_layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve_target_layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_attention_layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_attention_layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-hook-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Hook Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Hook Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activationhook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ActivationHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradienthook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradientHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multihook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MultiHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attentionhook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AttentionHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="torchxai-api-reference">torchxai API Reference<a class="headerlink" href="#torchxai-api-reference" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Comprehensive reference for all public classes and functions in the <code>torchxai</code> library.</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-core-api">Core API</a></li>
+<li><a href="#explain"><code>explain</code></a></li>
+<li><a href="#2-explainer-classes">Explainer Classes</a></li>
+<li><a href="#baseexplainer"><code>BaseExplainer</code></a></li>
+<li><a href="#gradcam"><code>GradCAM</code></a></li>
+<li><a href="#eigencam"><code>EigenCAM</code></a></li>
+<li><a href="#layercam"><code>LayerCAM</code></a></li>
+<li><a href="#gradcamplusplus"><code>GradCAMPlusPlus</code></a></li>
+<li><a href="#attentionrollout"><code>AttentionRollout</code></a></li>
+<li><a href="#transformerattribution"><code>TransformerAttribution</code></a></li>
+<li><a href="#3-visualization-functions">Visualization Functions</a></li>
+<li><a href="#overlay_heatmap"><code>overlay_heatmap</code></a></li>
+<li><a href="#show_explanation"><code>show_explanation</code></a></li>
+<li><a href="#create_comparison"><code>create_comparison</code></a></li>
+<li><a href="#save_heatmap"><code>save_heatmap</code></a></li>
+<li><a href="#4-metrics">Metrics</a></li>
+<li><a href="#insertion_score"><code>insertion_score</code></a></li>
+<li><a href="#deletion_score"><code>deletion_score</code></a></li>
+<li><a href="#stability_score"><code>stability_score</code></a></li>
+<li><a href="#5-utility-functions">Utility Functions</a></li>
+<li><a href="#preprocess_image"><code>preprocess_image</code></a></li>
+<li><a href="#load_image"><code>load_image</code></a></li>
+<li><a href="#tensor_to_numpy"><code>tensor_to_numpy</code></a></li>
+<li><a href="#denormalize"><code>denormalize</code></a></li>
+<li><a href="#normalize_heatmap"><code>normalize_heatmap</code></a></li>
+<li><a href="#6-model-registry">Model Registry</a></li>
+<li><a href="#detect_architecture"><code>detect_architecture</code></a></li>
+<li><a href="#resolve_target_layer"><code>resolve_target_layer</code></a></li>
+<li><a href="#find_attention_layers"><code>find_attention_layers</code></a></li>
+<li><a href="#7-hook-classes">Hook Classes</a></li>
+<li><a href="#activationhook"><code>ActivationHook</code></a></li>
+<li><a href="#gradienthook"><code>GradientHook</code></a></li>
+<li><a href="#multihook"><code>MultiHook</code></a></li>
+<li><a href="#attentionhook"><code>AttentionHook</code></a></li>
+</ol>
+<hr />
+<h2 id="1-core-api">1. Core API<a class="headerlink" href="#1-core-api" title="Permanent link">&para;</a></h2>
+<h3 id="explain"><code>explain</code><a class="headerlink" href="#explain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">target_class</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">target_layer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</code></pre></div>
+<p>The top-level entry point for generating saliency maps. Automatically selects the best explanation method for the given model architecture when <code>method="auto"</code>, handles all supported input formats, and returns a normalized heatmap.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>Any PyTorch vision model. Must be in eval mode (<code>model.eval()</code>) before calling.</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td><code>torch.Tensor \| Image.Image \| np.ndarray \| str \| Path</code></td>
+<td>—</td>
+<td>Input image. Accepted formats: tensor of shape <code>(1, 3, H, W)</code> or <code>(3, H, W)</code>, PIL <code>Image</code>, NumPy array of shape <code>(H, W, 3)</code>, file path as <code>str</code>, or <code>pathlib.Path</code>.</td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td><code>str</code></td>
+<td><code>"auto"</code></td>
+<td>Explanation method to use. One of: <code>"auto"</code>, <code>"gradcam"</code>, <code>"eigencam"</code>, <code>"layercam"</code>, <code>"gradcam_pp"</code>, <code>"attention_rollout"</code>, <code>"transformer_attribution"</code>. When <code>"auto"</code>, the method is selected based on the detected model architecture.</td>
+</tr>
+<tr>
+<td><code>target_class</code></td>
+<td><code>Optional[int]</code></td>
+<td><code>None</code></td>
+<td>Class index to explain. When <code>None</code>, the class with the highest predicted probability is used.</td>
+</tr>
+<tr>
+<td><code>target_layer</code></td>
+<td><code>Optional[Union[str, nn.Module]]</code></td>
+<td><code>None</code></td>
+<td>Layer to use for explanation. Accepts either the string name of a named module (e.g., <code>"layer4"</code>) or a direct module reference. When <code>None</code>, the layer is auto-detected via <code>resolve_target_layer</code>.</td>
+</tr>
+<tr>
+<td><code>image_size</code></td>
+<td><code>tuple</code></td>
+<td><code>(224, 224)</code></td>
+<td>Target <code>(height, width)</code> to resize non-tensor inputs before processing. Has no effect when <code>image</code> is already a tensor.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>np.ndarray</code> — A 2-D float array of shape <code>(H, W)</code> with values in <code>[0, 1]</code>, where higher values indicate greater relevance to the predicted or specified class.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchxai</span>
+
+<span class="c1"># Load a pretrained model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="c1"># Explain from a file path — auto-detects architecture and layer</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">torchxai</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;cat.jpg&quot;</span><span class="p">)</span>
+
+<span class="c1"># Specify a method and target class explicitly</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">torchxai</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="s2">&quot;cat.jpg&quot;</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gradcam&quot;</span><span class="p">,</span>
+    <span class="n">target_class</span><span class="o">=</span><span class="mi">281</span><span class="p">,</span>         <span class="c1"># ImageNet class: tabby cat</span>
+    <span class="n">target_layer</span><span class="o">=</span><span class="s2">&quot;layer4&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Use a raw tensor input</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">torchxai</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;eigencam&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># (224, 224)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">heatmap</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>  <span class="c1"># 0.0, 1.0</span>
+</code></pre></div>
+<hr />
+<h2 id="2-explainer-classes">2. Explainer Classes<a class="headerlink" href="#2-explainer-classes" title="Permanent link">&para;</a></h2>
+<p>All explainer classes share a common base interface defined by <code>BaseExplainer</code>. They are callable objects that encapsulate a model and explanation strategy, and can be reused across multiple images without re-initializing.</p>
+<hr />
+<h3 id="baseexplainer"><code>BaseExplainer</code><a class="headerlink" href="#baseexplainer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">explainers</span><span class="o">.</span><span class="n">BaseExplainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">target_layer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Abstract base class for all explainer implementations. Not intended to be instantiated directly — use one of the concrete subclasses. Defines the shared interface and lifecycle for explainers.</p>
+<p><strong>Class Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requires_grad</code></td>
+<td><code>bool</code></td>
+<td>Whether the explainer requires gradient computation. Subclasses that need gradients set this to <code>True</code>; gradient-free methods set it to <code>False</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Constructor Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>The PyTorch model to explain. Should be in eval mode.</td>
+</tr>
+<tr>
+<td><code>target_layer</code></td>
+<td><code>Optional[Union[str, nn.Module]]</code></td>
+<td><code>None</code></td>
+<td>The layer from which activations (and optionally gradients) are captured. Accepts a module name string or a direct reference. If <code>None</code>, the layer is resolved automatically.</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>Optional[Union[str, torch.device]]</code></td>
+<td><code>None</code></td>
+<td>Device to run computations on (e.g., <code>"cpu"</code>, <code>"cuda"</code>, <code>torch.device("mps")</code>). Defaults to the device of the model's parameters.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods</strong></p>
+<h4 id="__call__"><code>__call__</code><a class="headerlink" href="#__call__" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">explainer</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">target_class</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</code></pre></div>
+<p>Runs the explanation on the given image.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>image</code></td>
+<td><code>torch.Tensor \| Image.Image \| np.ndarray \| str \| Path</code></td>
+<td>—</td>
+<td>Input image in any supported format.</td>
+</tr>
+<tr>
+<td><code>target_class</code></td>
+<td><code>Optional[int]</code></td>
+<td><code>None</code></td>
+<td>Target class index. Uses the top-1 predicted class when <code>None</code>.</td>
+</tr>
+<tr>
+<td><code>image_size</code></td>
+<td><code>tuple</code></td>
+<td><code>(224, 224)</code></td>
+<td>Resize target for non-tensor inputs.</td>
+</tr>
+</tbody>
+</table>
+<p>Returns <code>np.ndarray</code> of shape <code>(H, W)</code> in <code>[0, 1]</code>.</p>
+<h4 id="__repr__"><code>__repr__</code><a class="headerlink" href="#__repr__" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">explainer</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</code></pre></div>
+<p>Returns a human-readable string summarizing the explainer's configuration, including the model type, target layer name, and device.</p>
+<hr />
+<h3 id="gradcam"><code>GradCAM</code><a class="headerlink" href="#gradcam" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">GradCAM</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">target_layer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Gradient-weighted Class Activation Mapping. Computes a coarse localization map by weighting each feature map channel with the gradient of the class score with respect to that channel, then applies a ReLU. Works well with most CNN architectures and produces class-discriminative maps.</p>
+<p><strong>Class Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requires_grad</code></td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>CNN model to explain.</td>
+</tr>
+<tr>
+<td><code>target_layer</code></td>
+<td><code>Optional[Union[str, nn.Module]]</code></td>
+<td><code>None</code></td>
+<td>Convolutional layer from which to extract feature maps. Defaults to the last convolutional layer.</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>Optional[Union[str, torch.device]]</code></td>
+<td><code>None</code></td>
+<td>Compute device. Inferred from model if <code>None</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAM</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="s2">&quot;layer4&quot;</span><span class="p">)</span>
+
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="s2">&quot;dog.jpg&quot;</span><span class="p">,</span> <span class="n">target_class</span><span class="o">=</span><span class="mi">207</span><span class="p">)</span>  <span class="c1"># golden retriever</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># (224, 224)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">explainer</span><span class="p">))</span> <span class="c1"># GradCAM(model=ResNet, layer=layer4, device=cpu)</span>
+</code></pre></div>
+<hr />
+<h3 id="eigencam"><code>EigenCAM</code><a class="headerlink" href="#eigencam" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">EigenCAM</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">target_layer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Eigen-decomposition Class Activation Mapping. Computes the saliency map from the first principal component of the target layer's activations using SVD. Does not require backpropagation, making it faster and more memory-efficient than gradient-based methods. Particularly effective for object detection models where class-discriminativeness is less critical.</p>
+<p><strong>Class Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requires_grad</code></td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>CNN model to explain.</td>
+</tr>
+<tr>
+<td><code>target_layer</code></td>
+<td><code>Optional[Union[str, nn.Module]]</code></td>
+<td><code>None</code></td>
+<td>Layer from which to extract activations for PCA. Defaults to the last convolutional layer.</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>Optional[Union[str, torch.device]]</code></td>
+<td><code>None</code></td>
+<td>Compute device.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">EigenCAM</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">efficientnet_b0</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="c1"># No gradient context needed — EigenCAM is gradient-free</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">EigenCAM</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">heatmap</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="s2">&quot;bird.jpg&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (224, 224)</span>
+</code></pre></div>
+<hr />
+<h3 id="layercam"><code>LayerCAM</code><a class="headerlink" href="#layercam" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">LayerCAM</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">target_layer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Layer Class Activation Mapping. An extension of GradCAM that fuses activations element-wise with their corresponding gradients (before global averaging), preserving fine spatial detail. Produces higher-resolution and more precise saliency maps than standard GradCAM, especially when applied to shallow layers.</p>
+<p><strong>Class Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requires_grad</code></td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>CNN model to explain.</td>
+</tr>
+<tr>
+<td><code>target_layer</code></td>
+<td><code>Optional[Union[str, nn.Module]]</code></td>
+<td><code>None</code></td>
+<td>Layer to capture. Shallow layers (e.g., <code>"layer2"</code>) yield finer details.</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>Optional[Union[str, torch.device]]</code></td>
+<td><code>None</code></td>
+<td>Compute device.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">LayerCAM</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="c1"># Use an earlier layer for fine-grained localization</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">LayerCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="s2">&quot;layer2&quot;</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="s2">&quot;car.jpg&quot;</span><span class="p">,</span> <span class="n">target_class</span><span class="o">=</span><span class="mi">817</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (224, 224)</span>
+</code></pre></div>
+<hr />
+<h3 id="gradcamplusplus"><code>GradCAMPlusPlus</code><a class="headerlink" href="#gradcamplusplus" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">GradCAMPlusPlus</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">target_layer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Gradient-weighted Class Activation Mapping++ (Grad-CAM++). An improved variant of GradCAM that uses a weighted combination of partial derivatives of the class activation score, yielding better localization of multiple object instances in the same image and cleaner boundary delineation.</p>
+<p><strong>Class Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requires_grad</code></td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>CNN model to explain.</td>
+</tr>
+<tr>
+<td><code>target_layer</code></td>
+<td><code>Optional[Union[str, nn.Module]]</code></td>
+<td><code>None</code></td>
+<td>Target convolutional layer. Defaults to the last convolutional layer.</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>Optional[Union[str, torch.device]]</code></td>
+<td><code>None</code></td>
+<td>Compute device.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAMPlusPlus</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">vgg16</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAMPlusPlus</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="s2">&quot;features.28&quot;</span><span class="p">)</span>
+
+<span class="c1"># Useful when multiple instances of the same class appear in the image</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="s2">&quot;two_cats.jpg&quot;</span><span class="p">,</span> <span class="n">target_class</span><span class="o">=</span><span class="mi">281</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (224, 224)</span>
+</code></pre></div>
+<hr />
+<h3 id="attentionrollout"><code>AttentionRollout</code><a class="headerlink" href="#attentionrollout" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">AttentionRollout</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Attention Rollout for Vision Transformers (ViT). Computes saliency by recursively multiplying attention weight matrices across all transformer layers to propagate raw attention from output tokens back to input patches. Does not use gradients — works by accumulating attention flow. Best suited for ViT-family models with explicit multi-head self-attention.</p>
+<p><strong>Class Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requires_grad</code></td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>Vision Transformer model (e.g., ViT, DeiT).</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>Optional[Union[str, torch.device]]</code></td>
+<td><code>None</code></td>
+<td>Compute device.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> <code>AttentionRollout</code> does not accept a <code>target_layer</code> parameter. Attention hooks are applied automatically across all detected attention layers via <code>find_attention_layers</code>.</p>
+</blockquote>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">timm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AttentionRollout</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;vit_base_patch16_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">AttentionRollout</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">heatmap</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="s2">&quot;dog.jpg&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (224, 224)</span>
+</code></pre></div>
+<hr />
+<h3 id="transformerattribution"><code>TransformerAttribution</code><a class="headerlink" href="#transformerattribution" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">TransformerAttribution</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Gradient-based attribution for Vision Transformers. Combines attention weights with their corresponding gradients (with respect to the target class score) and aggregates across layers and heads. Provides class-discriminative saliency maps for transformer-based models where GradCAM-style methods are inapplicable.</p>
+<p><strong>Class Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requires_grad</code></td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>Vision Transformer model.</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>Optional[Union[str, torch.device]]</code></td>
+<td><code>None</code></td>
+<td>Compute device.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> Like <code>AttentionRollout</code>, <code>TransformerAttribution</code> does not expose a <code>target_layer</code> parameter. It automatically instruments all attention layers.</p>
+</blockquote>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">timm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformerAttribution</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;swin_base_patch4_window7_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">TransformerAttribution</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="s2">&quot;parrot.jpg&quot;</span><span class="p">,</span> <span class="n">target_class</span><span class="o">=</span><span class="mi">88</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (224, 224)</span>
+</code></pre></div>
+<hr />
+<h2 id="3-visualization-functions">3. Visualization Functions<a class="headerlink" href="#3-visualization-functions" title="Permanent link">&para;</a></h2>
+<h3 id="overlay_heatmap"><code>overlay_heatmap</code><a class="headerlink" href="#overlay_heatmap" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">overlay_heatmap</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+    <span class="n">heatmap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">colormap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;jet&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">output_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</code></pre></div>
+<p>Blends a saliency heatmap onto the original image using a colormap and alpha compositing. Returns an RGB image array suitable for display or saving.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>image</code></td>
+<td><code>np.ndarray \| Image.Image \| torch.Tensor</code></td>
+<td>—</td>
+<td>Original image. NumPy arrays should be <code>(H, W, 3)</code> in <code>[0, 255]</code>. PIL Images and tensors are converted automatically.</td>
+</tr>
+<tr>
+<td><code>heatmap</code></td>
+<td><code>np.ndarray</code></td>
+<td>—</td>
+<td>2-D float array <code>(H, W)</code> in <code>[0, 1]</code>. Typically the output of <code>explain()</code> or an explainer's <code>__call__</code>.</td>
+</tr>
+<tr>
+<td><code>colormap</code></td>
+<td><code>str</code></td>
+<td><code>"jet"</code></td>
+<td>Matplotlib colormap name applied to the heatmap before overlaying (e.g., <code>"jet"</code>, <code>"viridis"</code>, <code>"plasma"</code>, <code>"hot"</code>).</td>
+</tr>
+<tr>
+<td><code>alpha</code></td>
+<td><code>float</code></td>
+<td><code>0.5</code></td>
+<td>Blending weight of the heatmap in <code>[0, 1]</code>. <code>0.0</code> returns the original image; <code>1.0</code> returns only the colorized heatmap.</td>
+</tr>
+<tr>
+<td><code>output_size</code></td>
+<td><code>Optional[tuple]</code></td>
+<td><code>None</code></td>
+<td>Resize the output to <code>(height, width)</code>. If <code>None</code>, the output retains the original image dimensions.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>np.ndarray</code> — An <code>(H, W, 3)</code> uint8 array representing the blended image in RGB.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">overlay_heatmap</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;cat.jpg&quot;</span><span class="p">))</span>         <span class="c1"># (H, W, 3)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">torchxai</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;cat.jpg&quot;</span><span class="p">)</span>    <span class="c1"># (H, W) in [0,1]</span>
+
+<span class="n">blended</span> <span class="o">=</span> <span class="n">overlay_heatmap</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">heatmap</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">blended</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;overlay.png&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="show_explanation"><code>show_explanation</code><a class="headerlink" href="#show_explanation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">show_explanation</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+    <span class="n">heatmap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">colormap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;jet&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+</code></pre></div>
+<p>Renders a three-panel matplotlib figure showing the original image, the raw heatmap, and the blended overlay side by side. Optionally saves the figure to disk and returns it as a NumPy array for programmatic use.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>image</code></td>
+<td><code>np.ndarray \| Image.Image \| torch.Tensor</code></td>
+<td>—</td>
+<td>Original image.</td>
+</tr>
+<tr>
+<td><code>heatmap</code></td>
+<td><code>np.ndarray</code></td>
+<td>—</td>
+<td>2-D saliency map <code>(H, W)</code> in <code>[0, 1]</code>.</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>str</code></td>
+<td><code>""</code></td>
+<td>Figure title displayed above all three panels.</td>
+</tr>
+<tr>
+<td><code>colormap</code></td>
+<td><code>str</code></td>
+<td><code>"jet"</code></td>
+<td>Colormap applied to the heatmap panel and the overlay.</td>
+</tr>
+<tr>
+<td><code>alpha</code></td>
+<td><code>float</code></td>
+<td><code>0.5</code></td>
+<td>Overlay blending weight <code>[0, 1]</code>.</td>
+</tr>
+<tr>
+<td><code>figsize</code></td>
+<td><code>tuple</code></td>
+<td><code>(12, 4)</code></td>
+<td>Matplotlib figure size <code>(width_inches, height_inches)</code>.</td>
+</tr>
+<tr>
+<td><code>save_path</code></td>
+<td><code>Optional[str \| Path]</code></td>
+<td><code>None</code></td>
+<td>If provided, saves the figure as a PNG/JPG/PDF at this path before displaying.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>Optional[np.ndarray]</code> — The rendered figure as an <code>(H, W, 3)</code> RGB array when <code>save_path</code> is provided; otherwise <code>None</code> (figure is shown interactively).</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_explanation</span>
+
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">torchxai</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;cat.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gradcam&quot;</span><span class="p">)</span>
+
+<span class="c1"># Interactive display in a Jupyter notebook</span>
+<span class="n">show_explanation</span><span class="p">(</span><span class="s2">&quot;cat.jpg&quot;</span><span class="p">,</span> <span class="n">heatmap</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;GradCAM — ResNet50&quot;</span><span class="p">)</span>
+
+<span class="c1"># Save to disk without displaying</span>
+<span class="n">show_explanation</span><span class="p">(</span>
+    <span class="s2">&quot;cat.jpg&quot;</span><span class="p">,</span>
+    <span class="n">heatmap</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;GradCAM — ResNet50&quot;</span><span class="p">,</span>
+    <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;plasma&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;explanation.png&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="create_comparison"><code>create_comparison</code><a class="headerlink" href="#create_comparison" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">create_comparison</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+    <span class="n">heatmaps</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">colormap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;jet&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+</code></pre></div>
+<p>Generates a multi-panel comparison figure showing the original image alongside overlays for multiple explanation methods. Each entry in <code>heatmaps</code> produces one panel. Useful for visually comparing different explainers on the same input.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>image</code></td>
+<td><code>np.ndarray \| Image.Image \| torch.Tensor</code></td>
+<td>—</td>
+<td>Original image shown as the first panel.</td>
+</tr>
+<tr>
+<td><code>heatmaps</code></td>
+<td><code>dict</code></td>
+<td>—</td>
+<td>Mapping of <code>{label: heatmap}</code> where each key is a panel title (<code>str</code>) and each value is a 2-D array <code>(H, W)</code> in <code>[0, 1]</code>. Panel order follows dictionary insertion order.</td>
+</tr>
+<tr>
+<td><code>colormap</code></td>
+<td><code>str</code></td>
+<td><code>"jet"</code></td>
+<td>Colormap applied to all heatmap overlays.</td>
+</tr>
+<tr>
+<td><code>alpha</code></td>
+<td><code>float</code></td>
+<td><code>0.5</code></td>
+<td>Overlay blending weight <code>[0, 1]</code> applied to all panels.</td>
+</tr>
+<tr>
+<td><code>figsize</code></td>
+<td><code>Optional[tuple]</code></td>
+<td><code>None</code></td>
+<td>Figure size <code>(width, height)</code>. Defaults to <code>(4 * (1 + len(heatmaps)), 4)</code>.</td>
+</tr>
+<tr>
+<td><code>save_path</code></td>
+<td><code>Optional[str \| Path]</code></td>
+<td><code>None</code></td>
+<td>Save path for the output figure.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>Optional[np.ndarray]</code> — Rendered figure as <code>(H, W, 3)</code> array if <code>save_path</code> is provided; otherwise <code>None</code>.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAM</span><span class="p">,</span> <span class="n">EigenCAM</span><span class="p">,</span> <span class="n">GradCAMPlusPlus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_comparison</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">image_path</span> <span class="o">=</span> <span class="s2">&quot;dog.jpg&quot;</span>
+
+<span class="n">heatmaps</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;GradCAM&quot;</span><span class="p">:</span>      <span class="n">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">)(</span><span class="n">image_path</span><span class="p">),</span>
+    <span class="s2">&quot;EigenCAM&quot;</span><span class="p">:</span>     <span class="n">EigenCAM</span><span class="p">(</span><span class="n">model</span><span class="p">)(</span><span class="n">image_path</span><span class="p">),</span>
+    <span class="s2">&quot;GradCAM++&quot;</span><span class="p">:</span>    <span class="n">GradCAMPlusPlus</span><span class="p">(</span><span class="n">model</span><span class="p">)(</span><span class="n">image_path</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">create_comparison</span><span class="p">(</span>
+    <span class="n">image_path</span><span class="p">,</span>
+    <span class="n">heatmaps</span><span class="p">,</span>
+    <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.55</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;comparison.png&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="save_heatmap"><code>save_heatmap</code><a class="headerlink" href="#save_heatmap" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">save_heatmap</span><span class="p">(</span>
+    <span class="n">heatmap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">colormap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;jet&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+<p>Applies a colormap to a raw saliency map and writes the resulting image to disk. The output is saved as a standard image file (format determined by the file extension).</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>heatmap</code></td>
+<td><code>np.ndarray</code></td>
+<td>—</td>
+<td>2-D float array <code>(H, W)</code> in <code>[0, 1]</code>.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td><code>str \| Path</code></td>
+<td>—</td>
+<td>Output file path. Extension determines format: <code>.png</code>, <code>.jpg</code>, <code>.tiff</code>, etc.</td>
+</tr>
+<tr>
+<td><code>colormap</code></td>
+<td><code>str</code></td>
+<td><code>"jet"</code></td>
+<td>Matplotlib colormap name used to colorize the heatmap.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>None</code></p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_heatmap</span>
+
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">torchxai</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;cat.jpg&quot;</span><span class="p">)</span>
+<span class="n">save_heatmap</span><span class="p">(</span><span class="n">heatmap</span><span class="p">,</span> <span class="s2">&quot;heatmap_jet.png&quot;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">)</span>
+<span class="n">save_heatmap</span><span class="p">(</span><span class="n">heatmap</span><span class="p">,</span> <span class="s2">&quot;heatmap_viridis.png&quot;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="4-metrics">4. Metrics<a class="headerlink" href="#4-metrics" title="Permanent link">&para;</a></h2>
+<h3 id="insertion_score"><code>insertion_score</code><a class="headerlink" href="#insertion_score" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">insertion_score</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">input_tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">heatmap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">target_class</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="n">baseline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;blur&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span>
+</code></pre></div>
+<p>Computes the <strong>Insertion</strong> metric, which measures how quickly model confidence rises as image regions identified as important by the heatmap are progressively revealed. Pixels are inserted in descending order of saliency onto a baseline image. A higher score indicates a better-quality explanation.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>Evaluation model in eval mode. Need not be the same model used to generate the heatmap.</td>
+</tr>
+<tr>
+<td><code>input_tensor</code></td>
+<td><code>torch.Tensor</code></td>
+<td>—</td>
+<td>Preprocessed input tensor of shape <code>(1, 3, H, W)</code>.</td>
+</tr>
+<tr>
+<td><code>heatmap</code></td>
+<td><code>np.ndarray</code></td>
+<td>—</td>
+<td>2-D saliency map <code>(H, W)</code> in <code>[0, 1]</code>.</td>
+</tr>
+<tr>
+<td><code>target_class</code></td>
+<td><code>Optional[int]</code></td>
+<td><code>None</code></td>
+<td>Class index to evaluate confidence against. Defaults to the top-1 predicted class.</td>
+</tr>
+<tr>
+<td><code>steps</code></td>
+<td><code>int</code></td>
+<td><code>50</code></td>
+<td>Number of insertion steps. More steps increase accuracy but also computation time.</td>
+</tr>
+<tr>
+<td><code>baseline</code></td>
+<td><code>str</code></td>
+<td><code>"blur"</code></td>
+<td>Starting image from which pixels are revealed. <code>"blur"</code> uses a Gaussian-blurred version of the input; <code>"black"</code> uses a zero tensor; <code>"white"</code> uses an all-ones tensor.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>float</code> — Area under the insertion curve (AUC), normalized to <code>[0, 1]</code>. Higher is better.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">insertion_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocess_image</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">preprocess_image</span><span class="p">(</span><span class="s2">&quot;cat.jpg&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="n">heatmap</span> <span class="o">=</span> <span class="n">torchxai</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tensor</span><span class="p">)</span>
+
+<span class="n">score</span> <span class="o">=</span> <span class="n">insertion_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">heatmap</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Insertion AUC: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g., 0.8213</span>
+</code></pre></div>
+<hr />
+<h3 id="deletion_score"><code>deletion_score</code><a class="headerlink" href="#deletion_score" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">deletion_score</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">input_tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">heatmap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">target_class</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="n">baseline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span>
+</code></pre></div>
+<p>Computes the <strong>Deletion</strong> metric, which measures how quickly model confidence drops as important image regions (ranked by the heatmap) are progressively removed. A lower score indicates a better explanation — the model loses confidence faster when truly important regions are deleted.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>Evaluation model in eval mode.</td>
+</tr>
+<tr>
+<td><code>input_tensor</code></td>
+<td><code>torch.Tensor</code></td>
+<td>—</td>
+<td>Preprocessed input tensor of shape <code>(1, 3, H, W)</code>.</td>
+</tr>
+<tr>
+<td><code>heatmap</code></td>
+<td><code>np.ndarray</code></td>
+<td>—</td>
+<td>2-D saliency map <code>(H, W)</code> in <code>[0, 1]</code>.</td>
+</tr>
+<tr>
+<td><code>target_class</code></td>
+<td><code>Optional[int]</code></td>
+<td><code>None</code></td>
+<td>Class index to evaluate against. Defaults to top-1 predicted class.</td>
+</tr>
+<tr>
+<td><code>steps</code></td>
+<td><code>int</code></td>
+<td><code>50</code></td>
+<td>Number of deletion steps.</td>
+</tr>
+<tr>
+<td><code>baseline</code></td>
+<td><code>str</code></td>
+<td><code>"black"</code></td>
+<td>Replacement value for deleted pixels. <code>"black"</code> replaces with zeros; <code>"blur"</code> replaces with a blurred region; <code>"white"</code> replaces with ones.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>float</code> — Area under the deletion curve (AUC), normalized to <code>[0, 1]</code>. Lower is better.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">deletion_score</span>
+
+<span class="n">score</span> <span class="o">=</span> <span class="n">deletion_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">heatmap</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="s2">&quot;blur&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deletion AUC: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># e.g., 0.1892</span>
+</code></pre></div>
+<hr />
+<h3 id="stability_score"><code>stability_score</code><a class="headerlink" href="#stability_score" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">stability_score</span><span class="p">(</span>
+    <span class="n">explain_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">input_tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">num_perturbations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">noise_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span>
+</code></pre></div>
+<p>Measures the <strong>sensitivity</strong> (inverse stability) of an explanation method. Applies multiple small Gaussian perturbations to the input and measures the average pairwise difference between the resulting heatmaps. Lower values indicate more stable, robust explanations.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>explain_fn</code></td>
+<td><code>Callable[[torch.Tensor], np.ndarray]</code></td>
+<td>—</td>
+<td>A callable that accepts a <code>(1, 3, H, W)</code> tensor and returns a <code>(H, W)</code> heatmap. Typically <code>lambda x: explainer(x)</code> or <code>lambda x: torchxai.explain(model, x)</code>.</td>
+</tr>
+<tr>
+<td><code>input_tensor</code></td>
+<td><code>torch.Tensor</code></td>
+<td>—</td>
+<td>Clean input image tensor of shape <code>(1, 3, H, W)</code>.</td>
+</tr>
+<tr>
+<td><code>num_perturbations</code></td>
+<td><code>int</code></td>
+<td><code>10</code></td>
+<td>Number of noisy variants to generate and evaluate.</td>
+</tr>
+<tr>
+<td><code>noise_scale</code></td>
+<td><code>float</code></td>
+<td><code>0.02</code></td>
+<td>Standard deviation of Gaussian noise added to the input. Relative to the input's value range.</td>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td><code>Optional[int]</code></td>
+<td><code>None</code></td>
+<td>Random seed for reproducibility. When <code>None</code>, results vary across calls.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>float</code> — Mean absolute difference between perturbed heatmaps and the baseline heatmap, averaged over all perturbations. Lower is more stable.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">stability_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAM</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="n">score</span> <span class="o">=</span> <span class="n">stability_score</span><span class="p">(</span>
+    <span class="n">explain_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">explainer</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+    <span class="n">input_tensor</span><span class="o">=</span><span class="n">tensor</span><span class="p">,</span>
+    <span class="n">num_perturbations</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">noise_scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stability score: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># lower = more stable</span>
+</code></pre></div>
+<hr />
+<h2 id="5-utility-functions">5. Utility Functions<a class="headerlink" href="#5-utility-functions" title="Permanent link">&para;</a></h2>
+<h3 id="preprocess_image"><code>preprocess_image</code><a class="headerlink" href="#preprocess_image" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">preprocess_image</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
+    <span class="n">mean</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">std</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+</code></pre></div>
+<p>Converts an image from any supported format into a normalized <code>(1, 3, H, W)</code> float tensor ready for inference. Applies ImageNet normalization by default.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>image</code></td>
+<td><code>np.ndarray \| Image.Image \| str \| Path</code></td>
+<td>—</td>
+<td>Input image as a NumPy array <code>(H, W, 3)</code>, PIL Image, or file path.</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>tuple</code></td>
+<td><code>(224, 224)</code></td>
+<td>Target <code>(height, width)</code> after resizing.</td>
+</tr>
+<tr>
+<td><code>mean</code></td>
+<td><code>Optional[list]</code></td>
+<td><code>None</code></td>
+<td>Per-channel normalization mean <code>[R, G, B]</code>. Defaults to ImageNet mean <code>[0.485, 0.456, 0.406]</code>.</td>
+</tr>
+<tr>
+<td><code>std</code></td>
+<td><code>Optional[list]</code></td>
+<td><code>None</code></td>
+<td>Per-channel normalization standard deviation <code>[R, G, B]</code>. Defaults to ImageNet std <code>[0.229, 0.224, 0.225]</code>.</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>Optional[Union[str, torch.device]]</code></td>
+<td><code>None</code></td>
+<td>Device to place the output tensor on. Defaults to <code>"cpu"</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>torch.Tensor</code> — Float tensor of shape <code>(1, 3, H, W)</code> normalized and ready for model inference.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocess_image</span>
+
+<span class="c1"># Default ImageNet normalization</span>
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">preprocess_image</span><span class="p">(</span><span class="s2">&quot;cat.jpg&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># torch.Size([1, 3, 224, 224])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># cuda:0</span>
+
+<span class="c1"># Custom normalization for a model trained on a different dataset</span>
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">preprocess_image</span><span class="p">(</span>
+    <span class="s2">&quot;cat.jpg&quot;</span><span class="p">,</span>
+    <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+    <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="load_image"><code>load_image</code><a class="headerlink" href="#load_image" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">load_image</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span>
+</code></pre></div>
+<p>Loads an image from disk, converts it to RGB, and resizes it to the target dimensions. Returns a PIL Image for use with visualization functions or further processing.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path</code></td>
+<td><code>str \| Path</code></td>
+<td>—</td>
+<td>Path to the image file. Supports any format readable by PIL (JPEG, PNG, BMP, TIFF, WebP, etc.).</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>tuple</code></td>
+<td><code>(224, 224)</code></td>
+<td>Target <code>(width, height)</code> passed to <code>Image.resize</code>. Note: PIL uses <code>(width, height)</code> order.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>Image.Image</code> — RGB PIL Image resized to <code>size</code>.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_image</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="s2">&quot;photo.jpg&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>   <span class="c1"># (256, 256)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>   <span class="c1"># &#39;RGB&#39;</span>
+
+<span class="c1"># Compatible with visualization functions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">overlay_heatmap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">blended</span> <span class="o">=</span> <span class="n">overlay_heatmap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">heatmap</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="tensor_to_numpy"><code>tensor_to_numpy</code><a class="headerlink" href="#tensor_to_numpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">tensor_to_numpy</span><span class="p">(</span>
+    <span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</code></pre></div>
+<p>Converts a PyTorch image tensor to a NumPy array, handling device transfer, gradient detachment, and channel-order conversion from <code>(C, H, W)</code> or <code>(1, C, H, W)</code> to <code>(H, W, C)</code>.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tensor</code></td>
+<td><code>torch.Tensor</code></td>
+<td>—</td>
+<td>Image tensor of shape <code>(C, H, W)</code> or <code>(1, C, H, W)</code>. Values may be in any range; no normalization is applied.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>np.ndarray</code> — Float32 array of shape <code>(H, W, C)</code>.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensor_to_numpy</span>
+
+<span class="c1"># Remove batch dimension and reorder channels</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">tensor_to_numpy</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>    <span class="c1"># tensor: (1, 3, 224, 224)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>                 <span class="c1"># (224, 224, 3)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>                 <span class="c1"># float32</span>
+</code></pre></div>
+<hr />
+<h3 id="denormalize"><code>denormalize</code><a class="headerlink" href="#denormalize" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">denormalize</span><span class="p">(</span>
+    <span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">mean</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">std</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
+</code></pre></div>
+<p>Reverses ImageNet-style normalization, converting a normalized tensor back to the <code>[0, 1]</code> pixel value range. Useful for visualization of preprocessed inputs.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tensor</code></td>
+<td><code>torch.Tensor</code></td>
+<td>—</td>
+<td>Normalized image tensor of shape <code>(C, H, W)</code> or <code>(1, C, H, W)</code>.</td>
+</tr>
+<tr>
+<td><code>mean</code></td>
+<td><code>Optional[list]</code></td>
+<td><code>None</code></td>
+<td>Mean used during normalization. Defaults to ImageNet mean <code>[0.485, 0.456, 0.406]</code>.</td>
+</tr>
+<tr>
+<td><code>std</code></td>
+<td><code>Optional[list]</code></td>
+<td><code>None</code></td>
+<td>Standard deviation used during normalization. Defaults to ImageNet std <code>[0.229, 0.224, 0.225]</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>torch.Tensor</code> — Tensor of the same shape as <code>tensor</code> with values approximately in <code>[0, 1]</code>.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocess_image</span><span class="p">,</span> <span class="n">denormalize</span>
+
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">preprocess_image</span><span class="p">(</span><span class="s2">&quot;cat.jpg&quot;</span><span class="p">)</span>          <span class="c1"># normalized, (1, 3, 224, 224)</span>
+<span class="n">original</span> <span class="o">=</span> <span class="n">denormalize</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>                <span class="c1"># back to [0, 1]</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="p">(</span><span class="n">original</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;recovered.png&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="normalize_heatmap"><code>normalize_heatmap</code><a class="headerlink" href="#normalize_heatmap" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">normalize_heatmap</span><span class="p">(</span>
+    <span class="n">heatmap</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</code></pre></div>
+<p>Normalizes a raw saliency map to the <code>[0, 1]</code> range using min-max scaling. Handles edge cases where the heatmap is constant (returns a zero array).</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>heatmap</code></td>
+<td><code>np.ndarray</code></td>
+<td>—</td>
+<td>Raw 2-D saliency map of any shape and value range.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>np.ndarray</code> — Float32 array of the same shape as <code>heatmap</code> with values in <code>[0, 1]</code>.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">normalize_heatmap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>   <span class="c1"># arbitrary range</span>
+<span class="n">normalized</span> <span class="o">=</span> <span class="n">normalize_heatmap</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">normalized</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">normalized</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>  <span class="c1"># 0.0, 1.0</span>
+
+<span class="c1"># Safe on constant arrays</span>
+<span class="n">flat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span> <span class="o">*</span> <span class="mf">3.5</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">normalize_heatmap</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>  <span class="c1"># 0.0</span>
+</code></pre></div>
+<hr />
+<h2 id="6-model-registry">6. Model Registry<a class="headerlink" href="#6-model-registry" title="Permanent link">&para;</a></h2>
+<h3 id="detect_architecture"><code>detect_architecture</code><a class="headerlink" href="#detect_architecture" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">detect_architecture</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArchType</span>
+</code></pre></div>
+<p>Inspects a model's class hierarchy, layer names, and structural properties to determine its architectural family. The result is used internally by <code>explain()</code> and <code>resolve_target_layer()</code> to choose an appropriate explanation method and target layer.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>The model to inspect. Does not need to be in eval mode.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>ArchType</code> — An enum value representing the detected architecture family. Possible values:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ArchType.CNN</code></td>
+<td>Standard convolutional networks (ResNet, VGG, EfficientNet, MobileNet, etc.)</td>
+</tr>
+<tr>
+<td><code>ArchType.VIT</code></td>
+<td>Plain Vision Transformers (ViT, DeiT)</td>
+</tr>
+<tr>
+<td><code>ArchType.SWIN</code></td>
+<td>Swin Transformer and variants</td>
+</tr>
+<tr>
+<td><code>ArchType.CLIP</code></td>
+<td>CLIP visual encoders</td>
+</tr>
+<tr>
+<td><code>ArchType.UNKNOWN</code></td>
+<td>Architecture could not be classified</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect_architecture</span><span class="p">,</span> <span class="n">ArchType</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">timm</span>
+
+<span class="n">resnet</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">detect_architecture</span><span class="p">(</span><span class="n">resnet</span><span class="p">))</span>           <span class="c1"># ArchType.CNN</span>
+
+<span class="n">vit</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;vit_base_patch16_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">detect_architecture</span><span class="p">(</span><span class="n">vit</span><span class="p">))</span>             <span class="c1"># ArchType.VIT</span>
+
+<span class="n">swin</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;swin_base_patch4_window7_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">detect_architecture</span><span class="p">(</span><span class="n">swin</span><span class="p">))</span>            <span class="c1"># ArchType.SWIN</span>
+
+<span class="c1"># Use the result in branching logic</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">detect_architecture</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">arch</span> <span class="o">==</span> <span class="n">ArchType</span><span class="o">.</span><span class="n">CNN</span><span class="p">:</span>
+    <span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">arch</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ArchType</span><span class="o">.</span><span class="n">VIT</span><span class="p">,</span> <span class="n">ArchType</span><span class="o">.</span><span class="n">SWIN</span><span class="p">):</span>
+    <span class="n">explainer</span> <span class="o">=</span> <span class="n">AttentionRollout</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="resolve_target_layer"><code>resolve_target_layer</code><a class="headerlink" href="#resolve_target_layer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">resolve_target_layer</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">arch_type</span><span class="p">:</span> <span class="n">ArchType</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span>
+</code></pre></div>
+<p>Returns the best default target layer for saliency-map extraction given a model and its detected architecture type. This is the heuristic used by <code>explain()</code> and all explainer classes when <code>target_layer=None</code>.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>The model whose layers are being inspected.</td>
+</tr>
+<tr>
+<td><code>arch_type</code></td>
+<td><code>ArchType</code></td>
+<td>—</td>
+<td>Architecture family as returned by <code>detect_architecture</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>nn.Module</code> — The resolved target layer module. For CNNs, this is typically the last convolutional block (e.g., <code>model.layer4[-1]</code> for ResNet). For transformers, this is the final attention or normalization layer.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect_architecture</span><span class="p">,</span> <span class="n">resolve_target_layer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">detect_architecture</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="n">resolve_target_layer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">arch</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;torchvision.models.resnet.Bottleneck&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>        <span class="c1"># Bottleneck(...)</span>
+
+<span class="c1"># Equivalent to passing target_layer=None in GradCAM</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAM</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="n">layer</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="find_attention_layers"><code>find_attention_layers</code><a class="headerlink" href="#find_attention_layers" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">find_attention_layers</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]</span>
+</code></pre></div>
+<p>Traverses the model's named modules and returns all layers identified as attention mechanisms (multi-head self-attention blocks, attention projection layers, etc.). Used internally by <code>AttentionRollout</code> and <code>TransformerAttribution</code> to register hooks across all attention layers.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>The transformer model to inspect.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p><code>list[nn.Module]</code> — Ordered list of attention layer modules from first to last in the forward pass. Returns an empty list if no attention layers are found (e.g., for plain CNNs).</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_attention_layers</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">timm</span>
+
+<span class="n">vit</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;vit_base_patch16_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">attn_layers</span> <span class="o">=</span> <span class="n">find_attention_layers</span><span class="p">(</span><span class="n">vit</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">attn_layers</span><span class="p">))</span>     <span class="c1"># 12 (one per transformer block)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">attn_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="c1"># &lt;class &#39;timm.models.vision_transformer.Attention&#39;&gt;</span>
+
+<span class="c1"># Inspect the final attention layer</span>
+<span class="n">last_attn</span> <span class="o">=</span> <span class="n">attn_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">last_attn</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="7-hook-classes">7. Hook Classes<a class="headerlink" href="#7-hook-classes" title="Permanent link">&para;</a></h2>
+<p>Hook classes are context managers that temporarily register PyTorch forward (and optionally backward) hooks on a target layer, storing activations and/or gradients as attributes. All hook classes follow the same pattern: use them with <code>with</code> statements to ensure hooks are removed after the forward/backward pass.</p>
+<hr />
+<h3 id="activationhook"><code>ActivationHook</code><a class="headerlink" href="#activationhook" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">ActivationHook</span><span class="p">(</span>
+    <span class="n">layer</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">detach</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Registers a forward hook on <code>layer</code> to capture its output activation during a forward pass. Useful for extracting feature maps from intermediate layers without modifying the model.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layer</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>The layer whose output activation will be captured.</td>
+</tr>
+<tr>
+<td><code>detach</code></td>
+<td><code>bool</code></td>
+<td><code>True</code></td>
+<td>If <code>True</code>, the captured activation is detached from the computation graph, preventing unintended gradient flow. Set to <code>False</code> if you need gradients through the captured tensor.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>activation</code></td>
+<td><code>torch.Tensor</code></td>
+<td>The layer's output tensor captured during the most recent forward pass. <code>None</code> before any forward pass has occurred.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.hooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActivationHook</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layer4</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="n">ActivationHook</span><span class="p">(</span><span class="n">target_layer</span><span class="p">,</span> <span class="n">detach</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">hook</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="n">activation</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">activation</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">activation</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># e.g., torch.Size([1, 2048, 7, 7])</span>
+</code></pre></div>
+<hr />
+<h3 id="gradienthook"><code>GradientHook</code><a class="headerlink" href="#gradienthook" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">GradientHook</span><span class="p">(</span>
+    <span class="n">layer</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Registers a backward hook on <code>layer</code> to capture the gradient of the loss (or any scalar) with respect to the layer's output. The gradient is stored after <code>.backward()</code> is called.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layer</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>The layer whose output gradient will be captured during backpropagation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gradient</code></td>
+<td><code>torch.Tensor</code></td>
+<td>The gradient tensor captured during the most recent backward pass. <code>None</code> before <code>.backward()</code> is called.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.hooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradientHook</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layer4</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="n">GradientHook</span><span class="p">(</span><span class="n">target_layer</span><span class="p">)</span> <span class="k">as</span> <span class="n">hook</span><span class="p">:</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="n">class_score</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">281</span><span class="p">]</span>   <span class="c1"># target class logit</span>
+    <span class="n">class_score</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">gradient</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">gradient</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gradient</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># e.g., torch.Size([1, 2048, 7, 7])</span>
+</code></pre></div>
+<hr />
+<h3 id="multihook"><code>MultiHook</code><a class="headerlink" href="#multihook" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">MultiHook</span><span class="p">(</span>
+    <span class="n">layer</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Registers both a forward hook and a backward hook on <code>layer</code> simultaneously, capturing both the activation and the gradient in a single context manager. Equivalent to using <code>ActivationHook</code> and <code>GradientHook</code> together, but with less boilerplate.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layer</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>The layer to instrument with both activation and gradient capture.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>activation</code></td>
+<td><code>torch.Tensor</code></td>
+<td>Forward-pass output of <code>layer</code>.</td>
+</tr>
+<tr>
+<td><code>gradient</code></td>
+<td><code>torch.Tensor</code></td>
+<td>Backward-pass gradient at <code>layer</code>'s output.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.hooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiHook</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">target_layer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layer4</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="n">MultiHook</span><span class="p">(</span><span class="n">target_layer</span><span class="p">)</span> <span class="k">as</span> <span class="n">hook</span><span class="p">:</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">281</span><span class="p">]</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="n">activation</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">activation</span>   <span class="c1"># (1, 2048, 7, 7)</span>
+    <span class="n">gradient</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">gradient</span>       <span class="c1"># (1, 2048, 7, 7)</span>
+
+<span class="c1"># Manual GradCAM computation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">gradient</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># (1, 2048, 1, 1)</span>
+<span class="n">cam</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">((</span><span class="n">weights</span> <span class="o">*</span> <span class="n">activation</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>      <span class="c1"># (1, 7, 7)</span>
+</code></pre></div>
+<hr />
+<h3 id="attentionhook"><code>AttentionHook</code><a class="headerlink" href="#attentionhook" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">torchxai</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">AttentionHook</span><span class="p">(</span>
+    <span class="n">layer</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Registers a forward hook on a transformer attention layer to capture the raw attention weight matrix produced by the softmax in multi-head self-attention. Designed for use with ViT-style attention modules where the attention map is an intermediate tensor.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layer</code></td>
+<td><code>nn.Module</code></td>
+<td>—</td>
+<td>A transformer attention module (e.g., <code>nn.MultiheadAttention</code> or a <code>timm</code> attention block). The hook intercepts the attention weight output.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>attention</code></td>
+<td><code>torch.Tensor</code></td>
+<td>Attention weight tensor of shape <code>(batch, heads, seq_len, seq_len)</code> captured during the most recent forward pass. <code>None</code> before any forward pass.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">timm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.hooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">AttentionHook</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_attention_layers</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;vit_base_patch16_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">attn_layers</span> <span class="o">=</span> <span class="n">find_attention_layers</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># Capture attention from the last transformer block</span>
+<span class="k">with</span> <span class="n">AttentionHook</span><span class="p">(</span><span class="n">attn_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">as</span> <span class="n">hook</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="n">attention</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">attention</span>
+
+<span class="c1"># attention shape: (1, 12, 197, 197) for ViT-B/16 with 12 heads, 196 patches + CLS</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">attention</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Extract CLS token attention to patch tokens</span>
+<span class="n">cls_attention</span> <span class="o">=</span> <span class="n">attention</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>   <span class="c1"># (12, 196)</span>
+<span class="n">mean_attention</span> <span class="o">=</span> <span class="n">cls_attention</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>    <span class="c1"># (196,) — average over heads</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../model-compatibility/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Model Compatibility">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Model Compatibility
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../advanced/" class="md-footer__link md-footer__link--next" aria-label="Next: Advanced Usage">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Advanced Usage
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rigvedrs/torchxai" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/torchxai-explain/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

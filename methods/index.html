@@ -1,0 +1,1983 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Explain any PyTorch vision model in one line of code — GradCAM, EigenCAM, Attention Rollout and 7 more methods for CNNs, ViTs, YOLO, DETR and DINO.">
+      
+      
+        <meta name="author" content="Rigved Shirvalkar">
+      
+      
+        <link rel="canonical" href="https://rigvedrs.github.io/torchxai/methods/">
+      
+      
+        <link rel="prev" href="../getting-started/">
+      
+      
+        <link rel="next" href="../model-compatibility/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Methods Guide - torchxai</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#explainability-methods-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="torchxai" class="md-header__button md-logo" aria-label="torchxai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            torchxai
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Methods Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rigvedrs/torchxai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rigvedrs/torchxai
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="torchxai" class="md-nav__button md-logo" aria-label="torchxai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    torchxai
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rigvedrs/torchxai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rigvedrs/torchxai
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methods Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methods Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gradcam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradCAM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GradCAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gradcam_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradCAM++
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GradCAM++">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layercam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LayerCAM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LayerCAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eigencam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EigenCAM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="EigenCAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attention-rollout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attention Rollout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attention Rollout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transformer-attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformer Attribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transformer Attribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method Comparison Table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Method Comparison Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visual-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-flowchart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision Flowchart
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decision Flowchart">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-reference-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick-Reference Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gradcam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradCAM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GradCAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gradcam_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GradCAM++
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GradCAM++">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layercam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LayerCAM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LayerCAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eigencam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EigenCAM
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="EigenCAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attention-rollout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attention Rollout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attention Rollout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transformer-attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformer Attribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transformer Attribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuition_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method Comparison Table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Method Comparison Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visual-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-flowchart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision Flowchart
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decision Flowchart">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-reference-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick-Reference Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="explainability-methods-guide">Explainability Methods Guide<a class="headerlink" href="#explainability-methods-guide" title="Permanent link">&para;</a></h1>
+<p>torchxai implements six explainability methods spanning CNN-based gradient attribution, activation-based analysis, and transformer attention propagation. This guide covers how each method works, when to reach for it, and its limitations.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#gradcam">GradCAM</a></li>
+<li><a href="#gradcam-1">GradCAM++</a></li>
+<li><a href="#layercam">LayerCAM</a></li>
+<li><a href="#eigencam">EigenCAM</a></li>
+<li><a href="#attention-rollout">Attention Rollout</a></li>
+<li><a href="#transformer-attribution">Transformer Attribution</a></li>
+<li><a href="#method-comparison-table">Method Comparison Table</a></li>
+<li><a href="#decision-flowchart">Decision Flowchart</a></li>
+</ol>
+<hr />
+<h2 id="gradcam">GradCAM<a class="headerlink" href="#gradcam" title="Permanent link">&para;</a></h2>
+<p><strong>Paper:</strong> Selvaraju et al., "Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization", ICCV 2017</p>
+<h3 id="intuition">Intuition<a class="headerlink" href="#intuition" title="Permanent link">&para;</a></h3>
+<p>GradCAM answers: <em>which spatial regions of the feature maps most influence the prediction?</em> It combines <strong>WHERE</strong> the model activates (the feature maps themselves) with <strong>HOW IMPORTANT</strong> those activations are (the gradients of the class score flowing back through those maps). The result is a coarse heatmap localized to the regions that drove the prediction.</p>
+<h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Forward pass</strong> — run the image through the model and record the activations at the chosen convolutional layer (typically the last one before the classifier head).</li>
+<li><strong>Backward pass</strong> — compute the gradient of the target class score ( y^c ) with respect to each spatial location ( (i, j) ) in each feature map channel ( k ): ( \frac{\partial y^c}{\partial A^k_{ij}} ).</li>
+<li><strong>Global average pooling over gradients</strong> — collapse the spatial gradient map for each channel into a single scalar weight ( \alpha^c_k = \frac{1}{Z} \sum_i \sum_j \frac{\partial y^c}{\partial A^k_{ij}} ). This weight captures the global importance of channel ( k ) for class ( c ).</li>
+<li><strong>Weighted combination of feature maps</strong> — form the raw CAM by computing the sum ( \sum_k \alpha^c_k A^k ), where each feature map is scaled by its importance weight.</li>
+<li><strong>ReLU</strong> — apply ReLU to retain only the regions with a <em>positive</em> influence on the target class, discarding features that suppress it.</li>
+<li><strong>Upsample to input size</strong> — bilinearly resize the resulting low-resolution heatmap to match the original image dimensions for overlay.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;cat.jpg&quot;</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gradcam&quot;</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="when-to-use">When to Use<a class="headerlink" href="#when-to-use" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>General-purpose default.</strong> If you are unsure which method to pick, start here.</li>
+<li>Works with any CNN architecture (ResNet, VGG, EfficientNet, ConvNeXt, etc.).</li>
+<li>Good for understanding broad regions of interest (object-level localization).</li>
+<li>Reliable when there is a single dominant object of the target class in the scene.</li>
+</ul>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Coarse spatial resolution</strong> — the heatmap is bounded by the spatial dimensions of the chosen feature map. For ResNet-50, the last conv layer produces 7×7 activations, so fine-grained pixel detail is lost after upsampling.</li>
+<li><strong>Single-object bias</strong> — when multiple instances of the target class appear, GradCAM tends to highlight whichever instance dominates the feature map, potentially missing the others.</li>
+<li>Requires a backward pass, so it cannot be used with non-differentiable components in the computation path.</li>
+</ul>
+<h3 id="example-output">Example Output<a class="headerlink" href="#example-output" title="Permanent link">&para;</a></h3>
+<p><img alt="GradCAM result" src="../assets/gradcam_result.png" /></p>
+<p><em>GradCAM overlay on a sample image. The heatmap is coarse but correctly localizes the dominant region of interest.</em></p>
+<hr />
+<h2 id="gradcam_1">GradCAM++<a class="headerlink" href="#gradcam_1" title="Permanent link">&para;</a></h2>
+<p><strong>Paper:</strong> Chattopadhyay et al., "Grad-CAM++: Improved Visual Explanations for Deep Convolutional Networks", WACV 2018</p>
+<h3 id="intuition_1">Intuition<a class="headerlink" href="#intuition_1" title="Permanent link">&para;</a></h3>
+<p>GradCAM++ improves on GradCAM by computing more <strong>precise per-pixel weights</strong> using second-order gradient information. The core insight is that the simple global average pooling used in GradCAM treats all spatial positions equally when computing channel importance. GradCAM++ instead weights each position in the gradient map differently based on how much that specific location contributes to the overall gradient — this makes it substantially better at handling <strong>multiple instances of the same class</strong> within a single scene.</p>
+<h3 id="how-it-works_1">How It Works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Forward pass</strong> — identical to GradCAM; record feature map activations ( A^k ) at the target layer.</li>
+<li><strong>Backward pass</strong> — compute first-, second-, and third-order gradients of the target class score with respect to each feature map activation.</li>
+<li><strong>Pixel-wise importance weights</strong> — use the higher-order gradients to compute a per-pixel weighting ( \alpha^{kc}_{ij} ) for each channel. This replaces the simple spatial average used in GradCAM. The weights are designed so that pixels near the object boundaries are up-weighted relative to background.</li>
+<li><strong>Weighted combination</strong> — apply the spatially-varying weights to the feature maps: ( \text{CAM}^c = \text{ReLU}!\left(\sum_k \alpha^{kc}<em ij="ij">{ij} \cdot A^k</em>\right) ).</li>
+<li><strong>ReLU</strong> — retain only positive contributions.</li>
+<li><strong>Upsample to input size</strong> — bilinear resize to match the original image.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gradcam++&quot;</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="when-to-use_1">When to Use<a class="headerlink" href="#when-to-use_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Scenes containing <strong>multiple instances of the target class</strong> (e.g., a group of birds, a crowd of people).</li>
+<li>When GradCAM produces a blob that misses part of the scene.</li>
+<li>Fine-grained classification tasks where precise localization matters more than broad region identification.</li>
+</ul>
+<h3 id="limitations_1">Limitations<a class="headerlink" href="#limitations_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Marginally slower than GradCAM due to higher-order gradient computation.</li>
+<li>The improvement over GradCAM is most pronounced for multi-instance scenes; for single-object images the results are typically similar.</li>
+</ul>
+<h3 id="example-output_1">Example Output<a class="headerlink" href="#example-output_1" title="Permanent link">&para;</a></h3>
+<p><img alt="GradCAM++ result" src="../assets/gradcam_pp_result.png" /></p>
+<p><em>GradCAM++ better captures both instances when multiple objects of the same class are present.</em></p>
+<hr />
+<h2 id="layercam">LayerCAM<a class="headerlink" href="#layercam" title="Permanent link">&para;</a></h2>
+<p><strong>Paper:</strong> Jiang et al., "LayerCAM: Exploring Hierarchical Class Activation Maps for Localization", IEEE Transactions on Image Processing 2021</p>
+<h3 id="intuition_2">Intuition<a class="headerlink" href="#intuition_2" title="Permanent link">&para;</a></h3>
+<p>LayerCAM applies gradient weighting <strong>pixel-by-pixel</strong> within each feature map rather than collapsing gradients to a per-channel scalar (as GradCAM does). This preserves far more spatial detail. Think of it as GradCAM operating at full spatial resolution within the feature map, making it capable of capturing fine-grained structure such as object parts, textures, or small discriminative regions.</p>
+<h3 id="how-it-works_2">How It Works<a class="headerlink" href="#how-it-works_2" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Forward pass</strong> — record feature map activations ( A^k ) at the chosen layer.</li>
+<li><strong>Backward pass</strong> — compute gradients ( \frac{\partial y^c}{\partial A^k_{ij}} ) at each spatial position ( (i, j) ) for each channel ( k ).</li>
+<li><strong>Element-wise weighting</strong> — multiply the gradients directly with the activations at every spatial position: ( W^k_{ij} = \text{ReLU}!\left(\frac{\partial y^c}{\partial A^k_{ij}}\right) \cdot A^k_{ij} ). No pooling — the spatial structure is kept intact.</li>
+<li><strong>Aggregate across channels</strong> — sum the per-channel weighted maps to produce a single spatial saliency map.</li>
+<li><strong>Upsample to input size</strong> — bilinear resize; because the feature maps preserve more detail at earlier layers, LayerCAM is particularly effective when applied to shallower layers.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;layercam&quot;</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="when-to-use_2">When to Use<a class="headerlink" href="#when-to-use_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Fine-grained localization</strong> — identifying specific parts of an object (e.g., the eyes of a face, the wheels of a car) rather than the whole object.</li>
+<li>Debugging model focus at multiple scales by applying LayerCAM to different layers.</li>
+<li>Tasks where GradCAM produces overly coarse results that don't align with the object boundary.</li>
+</ul>
+<h3 id="limitations_2">Limitations<a class="headerlink" href="#limitations_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>More sensitive to layer choice than GradCAM. Using the wrong layer can produce noisy or uninformative results.</li>
+<li>Higher-resolution feature maps (from early layers) can produce noisy outputs that require post-processing.</li>
+</ul>
+<h3 id="example-output_2">Example Output<a class="headerlink" href="#example-output_2" title="Permanent link">&para;</a></h3>
+<p><img alt="LayerCAM result" src="../assets/layercam_result.png" /></p>
+<p><em>LayerCAM produces finer spatial detail, better tracking the object outline compared to GradCAM.</em></p>
+<hr />
+<h2 id="eigencam">EigenCAM<a class="headerlink" href="#eigencam" title="Permanent link">&para;</a></h2>
+<p><strong>Paper:</strong> Muhammad &amp; Yeasin, "EigenCAM: Class Activation Map using Principal Components", IJCNN 2020</p>
+<h3 id="intuition_3">Intuition<a class="headerlink" href="#intuition_3" title="Permanent link">&para;</a></h3>
+<p>EigenCAM takes a fundamentally different approach: it <strong>does not require gradients at all</strong>. Instead, it applies PCA (via singular value decomposition) to the raw feature map activations and uses the <strong>first principal component</strong> as the saliency map. This captures the dominant mode of variation in what the model "sees" at that layer — the structures and patterns that account for the most activation energy. Because there is no backward pass, EigenCAM cannot answer "why class X?" but it can rapidly and efficiently answer "what is the model looking at?".</p>
+<h3 id="how-it-works_3">How It Works<a class="headerlink" href="#how-it-works_3" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Forward pass only</strong> — run the image through the network and record the feature map activations ( A \in \mathbb{R}^{C \times H \times W} ) at the target layer.</li>
+<li><strong>Reshape</strong> — flatten the spatial dimensions to get a matrix of shape ( C \times (H \cdot W) ).</li>
+<li><strong>Singular Value Decomposition (SVD)</strong> — decompose the activation matrix: ( A = U \Sigma V^T ). The first right singular vector ( v_1 ) (corresponding to the largest singular value) captures the principal axis of activation.</li>
+<li><strong>Reshape back</strong> — project the activations onto ( v_1 ) and reshape the result to ( H \times W ). This is the raw saliency map.</li>
+<li><strong>Normalize and upsample</strong> — min-max normalize to [0, 1] and bilinearly resize to input dimensions.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;eigencam&quot;</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="when-to-use_3">When to Use<a class="headerlink" href="#when-to-use_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>When <strong>speed is critical</strong> — EigenCAM requires only a single forward pass, making it the fastest available method, especially for high-throughput inference pipelines.</li>
+<li><strong>Class-agnostic visualization</strong> — when you want to understand what the model attends to in general, rather than for a specific class.</li>
+<li>Batch processing large datasets where running backward passes would be prohibitively expensive.</li>
+<li>Exploratory analysis and debugging when you want a quick sanity check on model focus.</li>
+</ul>
+<h3 id="limitations_3">Limitations<a class="headerlink" href="#limitations_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Not class-specific</strong> — EigenCAM cannot distinguish between "why is this a cat?" and "why is this a dog?". For the same image, it produces the same heatmap regardless of the target class.</li>
+<li>The principal component may capture texture or background structure rather than the discriminative object if the model has not learned strong localized representations.</li>
+</ul>
+<h3 id="example-output_3">Example Output<a class="headerlink" href="#example-output_3" title="Permanent link">&para;</a></h3>
+<p><img alt="EigenCAM result" src="../assets/eigencam_result.png" /></p>
+<p><em>EigenCAM highlights the dominant activation structure. Note the result is identical regardless of target class.</em></p>
+<hr />
+<h2 id="attention-rollout">Attention Rollout<a class="headerlink" href="#attention-rollout" title="Permanent link">&para;</a></h2>
+<p><strong>Paper:</strong> Abnar &amp; Zuidema, "Quantifying Attention Flow in Transformers", ACL 2020</p>
+<h3 id="intuition_4">Intuition<a class="headerlink" href="#intuition_4" title="Permanent link">&para;</a></h3>
+<p>Vision Transformers (ViT, DeiT, Swin) process images as sequences of patches and use self-attention to relate patches to each other. A single attention matrix from a single layer is not sufficient to understand where the model is looking — attention propagates and mixes across layers. Attention Rollout addresses this by <strong>tracing information flow through all attention layers simultaneously</strong>, asking: "at the final layer, which input patches contributed most to the [CLS] token decision?".</p>
+<h3 id="how-it-works_4">How It Works<a class="headerlink" href="#how-it-works_4" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Capture attention matrices</strong> — run a forward pass and record the self-attention matrices ( A^{(l)} \in \mathbb{R}^{h \times N \times N} ) from every transformer layer ( l ), where ( h ) is the number of attention heads and ( N ) is the sequence length (number of patches + 1 for the CLS token).</li>
+<li><strong>Average over heads</strong> — average each layer's attention matrix across all heads: ( \bar{A}^{(l)} \in \mathbb{R}^{N \times N} ).</li>
+<li><strong>Add residual connections</strong> — each transformer block has a residual connection, which means identity information also flows through. Model this by adding the identity matrix: ( \hat{A}^{(l)} = 0.5 \cdot \bar{A}^{(l)} + 0.5 \cdot I ).</li>
+<li><strong>Normalize rows</strong> — ensure each row sums to 1 (re-normalize after adding identity).</li>
+<li><strong>Multiply through all layers</strong> — compute the rollout matrix as the product of all layer attention matrices from input to output: ( R = \hat{A}^{(L)} \cdot \hat{A}^{(L-1)} \cdots \hat{A}^{(1)} ).</li>
+<li><strong>Extract CLS-to-patch attention</strong> — take the row corresponding to the CLS token, which gives the amount of attention each input patch received from the output. Reshape to the patch grid and upsample.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">timm</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;vit_base_patch16_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;attention_rollout&quot;</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="when-to-use_4">When to Use<a class="headerlink" href="#when-to-use_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Your model is a <strong>Vision Transformer</strong> (ViT, DeiT, BEiT, Swin Transformer, etc.).</li>
+<li>You want a computationally lightweight attention-based explanation (no backward pass needed beyond what is required to get attention weights).</li>
+<li>You need an overview of "where is the model paying attention?" across the full depth of the network.</li>
+</ul>
+<h3 id="limitations_4">Limitations<a class="headerlink" href="#limitations_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Class-agnostic</strong> — like EigenCAM, Attention Rollout cannot distinguish between classes. The same heatmap is produced regardless of the target class.</li>
+<li>The residual connection weighting (the 0.5 factor) is a heuristic; different values can significantly change the resulting map.</li>
+<li>May spread attention diffusely across many patches rather than producing sharp localization.</li>
+<li>Not applicable to CNNs.</li>
+</ul>
+<hr />
+<h2 id="transformer-attribution">Transformer Attribution<a class="headerlink" href="#transformer-attribution" title="Permanent link">&para;</a></h2>
+<p><strong>Paper:</strong> Chefer et al., "Transformer Interpretability Beyond Attention Visualization", CVPR 2021</p>
+<h3 id="intuition_5">Intuition<a class="headerlink" href="#intuition_5" title="Permanent link">&para;</a></h3>
+<p>Transformer Attribution combines the spatial locality of attention maps with the discriminative specificity of gradients. It asks: not just "where does attention flow?" but "which attended patches actually mattered for predicting this specific class?". This produces <strong>class-specific explanations for Vision Transformers</strong>, filling the gap left by Attention Rollout.</p>
+<h3 id="how-it-works_5">How It Works<a class="headerlink" href="#how-it-works_5" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Forward pass with attention recording</strong> — run the image and record all attention matrices ( A^{(l)} ) from every layer, as in Attention Rollout.</li>
+<li><strong>Backward pass</strong> — compute the gradient of the target class score ( y^c ) with respect to each attention matrix ( A^{(l)} ). These gradients indicate which attention connections matter most for the prediction.</li>
+<li><strong>Gradient-weighted attention</strong> — for each layer, multiply the attention matrix element-wise with its gradient: ( \tilde{A}^{(l)} = A^{(l)} \odot \frac{\partial y^c}{\partial A^{(l)}} ). Apply ReLU to keep only positive contributions.</li>
+<li><strong>Average over heads</strong> — average the weighted attention across all heads in each layer.</li>
+<li><strong>Rollout with weighted matrices</strong> — propagate the gradient-weighted attention matrices through all layers using the same rollout procedure as Attention Rollout (multiply matrices, accounting for residual connections).</li>
+<li><strong>Extract and upsample</strong> — take the CLS-to-patch row, reshape, and upsample to input size.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">timm</span><span class="o">.</span><span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;vit_base_patch16_224&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;transformer_attribution&quot;</span><span class="p">,</span> <span class="n">target_class</span><span class="o">=</span><span class="mi">243</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="when-to-use_5">When to Use<a class="headerlink" href="#when-to-use_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Class-specific explanation for Vision Transformers</strong> — when you need to answer "why does the model predict class X?" rather than "what is the model attending to?".</li>
+<li>Comparing model focus across different predicted classes on the same image.</li>
+<li>Research or auditing scenarios requiring the highest-quality ViT explanations.</li>
+</ul>
+<h3 id="limitations_5">Limitations<a class="headerlink" href="#limitations_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Slower than Attention Rollout — requires both forward and backward passes.</li>
+<li>Only applicable to transformer architectures with extractable attention matrices. Standard <code>torch.nn.MultiheadAttention</code> modules require hooks to capture attention weights.</li>
+<li>Like all gradient methods, the explanation can be sensitive to input perturbations.</li>
+</ul>
+<hr />
+<h2 id="method-comparison-table">Method Comparison Table<a class="headerlink" href="#method-comparison-table" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Speed</th>
+<th>Class-Specific</th>
+<th>Works on CNNs</th>
+<th>Works on ViTs</th>
+<th>Spatial Detail</th>
+<th>Paper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GradCAM</td>
+<td>Fast</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Low (feature map resolution)</td>
+<td>Selvaraju et al., ICCV 2017</td>
+</tr>
+<tr>
+<td>GradCAM++</td>
+<td>Fast</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Low–Medium</td>
+<td>Chattopadhyay et al., WACV 2018</td>
+</tr>
+<tr>
+<td>LayerCAM</td>
+<td>Fast</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Medium–High</td>
+<td>Jiang et al., TIP 2021</td>
+</tr>
+<tr>
+<td>EigenCAM</td>
+<td>Fastest</td>
+<td>No</td>
+<td>Yes</td>
+<td>Partial*</td>
+<td>Medium</td>
+<td>Muhammad &amp; Yeasin, IJCNN 2020</td>
+</tr>
+<tr>
+<td>Attention Rollout</td>
+<td>Fast</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Medium</td>
+<td>Abnar &amp; Zuidema, ACL 2020</td>
+</tr>
+<tr>
+<td>Transformer Attribution</td>
+<td>Moderate</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+<td>Medium</td>
+<td>Chefer et al., CVPR 2021</td>
+</tr>
+</tbody>
+</table>
+<p>* EigenCAM can be applied to convolutional feature maps in hybrid ViT architectures.</p>
+<p><strong>Speed definitions:</strong>
+- <strong>Fastest</strong> — forward pass only, no gradient computation
+- <strong>Fast</strong> — one forward + one backward pass
+- <strong>Moderate</strong> — multiple passes or higher-order gradient computation</p>
+<h3 id="visual-comparison">Visual Comparison<a class="headerlink" href="#visual-comparison" title="Permanent link">&para;</a></h3>
+<p><img alt="Method comparison" src="../assets/method_comparison.png" /></p>
+<p><em>Side-by-side comparison of all methods on the same input image. Note the difference in spatial granularity between GradCAM (coarse), LayerCAM (fine), and EigenCAM (class-agnostic).</em></p>
+<hr />
+<h2 id="decision-flowchart">Decision Flowchart<a class="headerlink" href="#decision-flowchart" title="Permanent link">&para;</a></h2>
+<p>Use this flowchart to select the right method for your use case.</p>
+<div class="highlight"><pre><span></span><code>Is your model a CNN or a Vision Transformer?
+│
+├── CNN
+│   │
+│   ├── Do you need the explanation to be class-specific?
+│   │   │
+│   │   ├── YES
+│   │   │   │
+│   │   │   ├── Do you need fine-grained / part-level localization?
+│   │   │   │   ├── YES  → LayerCAM
+│   │   │   │   └── NO
+│   │   │   │       │
+│   │   │   │       └── Are there multiple instances of the target class in the scene?
+│   │   │   │           ├── YES  → GradCAM++
+│   │   │   │           └── NO   → GradCAM  ← general-purpose default
+│   │   │
+│   │   └── NO (class-agnostic is fine)
+│   │       └── Is raw speed the primary concern?
+│   │           ├── YES  → EigenCAM  ← fastest, no backward pass
+│   │           └── NO   → GradCAM (still fast and interpretable)
+│
+└── Vision Transformer (ViT, DeiT, Swin, BEiT, ...)
+    │
+    ├── Do you need the explanation to be class-specific?
+    │   ├── YES  → Transformer Attribution
+    │   └── NO   → Attention Rollout  ← faster, no backward pass
+    │
+    └── Unsure / exploratory?
+        └── Start with Attention Rollout, then use Transformer Attribution
+            to verify class-specific attribution
+</code></pre></div>
+<h3 id="quick-reference-summary">Quick-Reference Summary<a class="headerlink" href="#quick-reference-summary" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Recommended Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First time, don't know what to pick</td>
+<td>GradCAM</td>
+</tr>
+<tr>
+<td>Multiple objects of same class</td>
+<td>GradCAM++</td>
+</tr>
+<tr>
+<td>Need to see object parts / fine detail</td>
+<td>LayerCAM</td>
+</tr>
+<tr>
+<td>Need speed above all else</td>
+<td>EigenCAM</td>
+</tr>
+<tr>
+<td>Using a Vision Transformer</td>
+<td>Attention Rollout (fast) or Transformer Attribution (class-specific)</td>
+</tr>
+<tr>
+<td>Batch processing large datasets</td>
+<td>EigenCAM or Attention Rollout</td>
+</tr>
+<tr>
+<td>Research / highest quality ViT explanation</td>
+<td>Transformer Attribution</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../getting-started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Getting Started
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../model-compatibility/" class="md-footer__link md-footer__link--next" aria-label="Next: Model Compatibility">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Model Compatibility
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rigvedrs/torchxai" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/torchxai-explain/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

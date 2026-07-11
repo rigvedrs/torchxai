@@ -1,0 +1,1809 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Explain any PyTorch vision model in one line of code — GradCAM, EigenCAM, Attention Rollout and 7 more methods for CNNs, ViTs, YOLO, DETR and DINO.">
+      
+      
+        <meta name="author" content="Rigved Shirvalkar">
+      
+      
+        <link rel="canonical" href="https://rigvedrs.github.io/torchxai/troubleshooting/">
+      
+      
+        <link rel="prev" href="../advanced/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Troubleshooting - torchxai</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="torchxai" class="md-header__button md-logo" aria-label="torchxai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            torchxai
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Troubleshooting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rigvedrs/torchxai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rigvedrs/torchxai
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="torchxai" class="md-nav__button md-logo" aria-label="torchxai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    torchxai
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rigvedrs/torchxai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rigvedrs/torchxai
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methods Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modulenotfounderror-no-module-named-torchxai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModuleNotFoundError: No module named 'torchxai'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch-version-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyTorch Version Conflicts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu-vs-cpu-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU vs CPU Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Errors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runtime Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_tkintertclerror-no-display-name-and-no-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _tkinter.TclError: no display name and no $DISPLAY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filenotfounderror-image-not-found-pathtoimgjpg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FileNotFoundError: Image not found: /path/to/img.jpg
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typeerror-unsupported-image-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TypeError: Unsupported image type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attributeerror-resnet-has-no-attribute-layer5-available-layers-layer1-layer2-layer3-layer4-fc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AttributeError: 'ResNet' has no attribute 'layer5'. Available layers: layer1, layer2, layer3, layer4, fc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valueerror-unknown-method-gradcam2-available-gradcam-eigencam-layercam-gradcam-attention_rollout-transformer_attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValueError: Unknown method 'gradcam2'. Available: gradcam, eigencam, layercam, gradcam++, attention_rollout, transformer_attribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtimeerror-cant-call-numpy-on-tensor-that-requires-grad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RuntimeError: Can't call numpy() on Tensor that requires grad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-out-of-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA out of memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Mistakes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#forgetting-modeleval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forgetting model.eval()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passing-unnormalized-images-to-models-expecting-imagenet-normalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passing Unnormalized Images to Models Expecting ImageNet Normalization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrong-tensor-shape-hwc-vs-chw-missing-batch-dimension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrong Tensor Shape (HWC vs CHW, Missing Batch Dimension)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-attention-methods-on-cnns-and-vice-versa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Attention Methods on CNNs (and Vice Versa)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FAQ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FAQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#which-method-should-i-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which method should I use?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#does-it-work-with-my-custom-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Does it work with my custom model?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-use-it-on-a-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can I use it on a GPU?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-heatmap-look-uniform-or-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why does my heatmap look uniform or blank?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-use-this-on-a-server-docker-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do I use this on a server / Docker / CI?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-explain-object-detection-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can I explain object detection models?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modulenotfounderror-no-module-named-torchxai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModuleNotFoundError: No module named 'torchxai'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch-version-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PyTorch Version Conflicts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpu-vs-cpu-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU vs CPU Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Errors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runtime Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_tkintertclerror-no-display-name-and-no-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _tkinter.TclError: no display name and no $DISPLAY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filenotfounderror-image-not-found-pathtoimgjpg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FileNotFoundError: Image not found: /path/to/img.jpg
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typeerror-unsupported-image-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TypeError: Unsupported image type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attributeerror-resnet-has-no-attribute-layer5-available-layers-layer1-layer2-layer3-layer4-fc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AttributeError: 'ResNet' has no attribute 'layer5'. Available layers: layer1, layer2, layer3, layer4, fc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valueerror-unknown-method-gradcam2-available-gradcam-eigencam-layercam-gradcam-attention_rollout-transformer_attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValueError: Unknown method 'gradcam2'. Available: gradcam, eigencam, layercam, gradcam++, attention_rollout, transformer_attribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtimeerror-cant-call-numpy-on-tensor-that-requires-grad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RuntimeError: Can't call numpy() on Tensor that requires grad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuda-out-of-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA out of memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Mistakes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#forgetting-modeleval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forgetting model.eval()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passing-unnormalized-images-to-models-expecting-imagenet-normalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passing Unnormalized Images to Models Expecting ImageNet Normalization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrong-tensor-shape-hwc-vs-chw-missing-batch-dimension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrong Tensor Shape (HWC vs CHW, Missing Batch Dimension)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-attention-methods-on-cnns-and-vice-versa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Attention Methods on CNNs (and Vice Versa)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FAQ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FAQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#which-method-should-i-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which method should I use?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#does-it-work-with-my-custom-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Does it work with my custom model?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-use-it-on-a-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can I use it on a GPU?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-heatmap-look-uniform-or-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why does my heatmap look uniform or blank?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-use-this-on-a-server-docker-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do I use this on a server / Docker / CI?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-explain-object-detection-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can I explain object detection models?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
+<p>This guide covers every common error, mistake, and question that comes up when using torchxai. Each entry includes the exact error message, its cause, and a complete fix.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#installation-issues">Installation Issues</a></li>
+<li><a href="#runtime-errors">Runtime Errors</a></li>
+<li><a href="#common-mistakes">Common Mistakes</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ol>
+<hr />
+<h2 id="installation-issues">Installation Issues<a class="headerlink" href="#installation-issues" title="Permanent link">&para;</a></h2>
+<h3 id="modulenotfounderror-no-module-named-torchxai"><code>ModuleNotFoundError: No module named 'torchxai'</code><a class="headerlink" href="#modulenotfounderror-no-module-named-torchxai" title="Permanent link">&para;</a></h3>
+<p><strong>Full error:</strong></p>
+<div class="highlight"><pre><span></span><code>ModuleNotFoundError: No module named &#39;torchxai&#39;
+</code></pre></div>
+<p><strong>Cause:</strong> The PyPI package is named <code>torchxai-explain</code>, not <code>torchxai</code>. Running <code>pip install torchxai</code> installs a different, unrelated package.</p>
+<p><strong>Fix:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Uninstall the wrong package if you installed it</span>
+pip<span class="w"> </span>uninstall<span class="w"> </span>torchxai<span class="w"> </span>-y
+
+<span class="c1"># Install the correct package</span>
+pip<span class="w"> </span>install<span class="w"> </span>torchxai-explain
+</code></pre></div>
+<p>Then verify:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torchxai; print(&#39;OK&#39;)&quot;</span>
+</code></pre></div>
+<hr />
+<h3 id="pytorch-version-conflicts">PyTorch Version Conflicts<a class="headerlink" href="#pytorch-version-conflicts" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> Import errors mentioning <code>torch</code>, <code>torchvision</code>, or C extension ABI mismatches after installing torchxai.</p>
+<p><strong>Cause:</strong> torchxai requires PyTorch 1.10 or later. Older PyTorch versions are not supported. Mixing PyTorch and torchvision versions that were not built together also causes conflicts.</p>
+<p><strong>Fix:</strong></p>
+<p>Check your current versions:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torch; print(torch.__version__)&quot;</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torchvision; print(torchvision.__version__)&quot;</span>
+</code></pre></div>
+<p>Install a compatible set. For CPU only:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cpu
+pip<span class="w"> </span>install<span class="w"> </span>torchxai-explain
+</code></pre></div>
+<p>For CUDA 11.8:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu118
+pip<span class="w"> </span>install<span class="w"> </span>torchxai-explain
+</code></pre></div>
+<p>For CUDA 12.1:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu121
+pip<span class="w"> </span>install<span class="w"> </span>torchxai-explain
+</code></pre></div>
+<p>See the <a href="https://pytorch.org/get-started/locally/">official PyTorch installation page</a> for the current recommended commands.</p>
+<hr />
+<h3 id="gpu-vs-cpu-installation">GPU vs CPU Installation<a class="headerlink" href="#gpu-vs-cpu-installation" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> Your GPU is not being used even though it is available.</p>
+<p><strong>Cause:</strong> You installed the CPU-only build of PyTorch.</p>
+<p><strong>Check:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>  <span class="c1"># Should print True if GPU is present and CUDA is installed</span>
+</code></pre></div>
+<p><strong>Fix:</strong> If this prints <code>False</code> but you have an NVIDIA GPU, reinstall PyTorch with CUDA support (see the version conflict fix above).</p>
+<p>torchxai uses the device your model is already on. Move your model to GPU before calling <code>explain()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s2">&quot;IMAGENET1K_V1&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="runtime-errors">Runtime Errors<a class="headerlink" href="#runtime-errors" title="Permanent link">&para;</a></h2>
+<h3 id="_tkintertclerror-no-display-name-and-no-display"><code>_tkinter.TclError: no display name and no $DISPLAY</code><a class="headerlink" href="#_tkintertclerror-no-display-name-and-no-display" title="Permanent link">&para;</a></h3>
+<p><strong>Full error:</strong></p>
+<div class="highlight"><pre><span></span><code>_tkinter.TclError: no display name and no $DISPLAY environment variable
+</code></pre></div>
+<p><strong>Cause:</strong> You called <code>show_explanation()</code> on a headless server (no graphical display), or inside a Docker container or CI environment without a display. torchxai handles this automatically for its own rendering, but if you are using matplotlib directly alongside torchxai you may see this error.</p>
+<p><strong>Fix — Option 1 (recommended): Save to a file instead of displaying</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span><span class="p">,</span> <span class="n">save_heatmap</span><span class="p">,</span> <span class="n">overlay_heatmap</span><span class="p">,</span> <span class="n">create_comparison</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+
+<span class="c1"># None of these require a display</span>
+<span class="n">save_heatmap</span><span class="p">(</span><span class="n">explanation</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;outputs/heatmap.png&quot;</span><span class="p">)</span>
+
+<span class="n">overlaid</span> <span class="o">=</span> <span class="n">overlay_heatmap</span><span class="p">(</span><span class="n">explanation</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">overlaid</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;outputs/overlaid.png&quot;</span><span class="p">)</span>
+
+<span class="n">create_comparison</span><span class="p">(</span><span class="n">explanation</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;outputs/comparison.png&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Fix — Option 2: Set the Agg backend before importing matplotlib</strong></p>
+<p>If you are using matplotlib directly in the same script:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>  <span class="c1"># Must be set before importing pyplot</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+<span class="c1"># Now use plt.savefig() instead of plt.show()</span>
+</code></pre></div>
+<hr />
+<h3 id="filenotfounderror-image-not-found-pathtoimgjpg"><code>FileNotFoundError: Image not found: /path/to/img.jpg</code><a class="headerlink" href="#filenotfounderror-image-not-found-pathtoimgjpg" title="Permanent link">&para;</a></h3>
+<p><strong>Full error:</strong></p>
+<div class="highlight"><pre><span></span><code>FileNotFoundError: Image not found: /path/to/img.jpg
+</code></pre></div>
+<p><strong>Cause:</strong> The path you passed to <code>explain()</code> does not exist or is misspelled.</p>
+<p><strong>Fix:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">image_path</span> <span class="o">=</span> <span class="s2">&quot;path/to/your/image.jpg&quot;</span>
+
+<span class="c1"># Check before calling explain</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File not found: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image_path</span><span class="p">)</span>
+</code></pre></div>
+<p>Common causes:
+- Relative paths resolving differently depending on where you run the script. Use <code>os.path.abspath()</code> to see the resolved path.
+- The file extension is wrong (e.g., the file is <code>.jpeg</code> but you wrote <code>.jpg</code>).
+- A typo in the directory name.</p>
+<hr />
+<h3 id="typeerror-unsupported-image-type"><code>TypeError: Unsupported image type</code><a class="headerlink" href="#typeerror-unsupported-image-type" title="Permanent link">&para;</a></h3>
+<p><strong>Full error:</strong></p>
+<div class="highlight"><pre><span></span><code>TypeError: Unsupported image type: &lt;class &#39;your_type&#39;&gt;. Expected one of: str, pathlib.Path, PIL.Image.Image, numpy.ndarray, torch.Tensor
+</code></pre></div>
+<p><strong>Cause:</strong> You passed a type that torchxai does not know how to convert.</p>
+<p><strong>Supported input types:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str</code></td>
+<td><code>"image.jpg"</code></td>
+</tr>
+<tr>
+<td><code>pathlib.Path</code></td>
+<td><code>Path("image.jpg")</code></td>
+</tr>
+<tr>
+<td><code>PIL.Image.Image</code></td>
+<td><code>Image.open("image.jpg")</code></td>
+</tr>
+<tr>
+<td><code>numpy.ndarray</code></td>
+<td><code>np.array(...)</code>, shape <code>(H, W, C)</code></td>
+</tr>
+<tr>
+<td><code>torch.Tensor</code></td>
+<td>shape <code>(C, H, W)</code> or <code>(1, C, H, W)</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fix:</strong> Convert your data to one of the supported types first:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># If you have raw bytes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="n">image_bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;...&quot;</span>  <span class="c1"># your bytes</span>
+<span class="n">pil_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">image_bytes</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">pil_image</span><span class="p">)</span>
+
+<span class="c1"># If you have an OpenCV image (BGR, shape HWC)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="n">bgr_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+<span class="n">rgb_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">bgr_image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">rgb_image</span><span class="p">)</span>  <span class="c1"># numpy arrays are accepted</span>
+</code></pre></div>
+<hr />
+<h3 id="attributeerror-resnet-has-no-attribute-layer5-available-layers-layer1-layer2-layer3-layer4-fc"><code>AttributeError: 'ResNet' has no attribute 'layer5'. Available layers: layer1, layer2, layer3, layer4, fc</code><a class="headerlink" href="#attributeerror-resnet-has-no-attribute-layer5-available-layers-layer1-layer2-layer3-layer4-fc" title="Permanent link">&para;</a></h3>
+<p><strong>Full error:</strong></p>
+<div class="highlight"><pre><span></span><code>AttributeError: &#39;ResNet&#39; has no attribute &#39;layer5&#39;. Available layers: layer1, layer2, layer3, layer4, avgpool, fc
+</code></pre></div>
+<p><strong>Cause:</strong> You specified a <code>target_layer</code> that does not exist on your model.</p>
+<p><strong>Fix:</strong> Print all named modules to find valid layer names:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s2">&quot;IMAGENET1K_V1&quot;</span><span class="p">)</span>
+
+<span class="c1"># List every named module</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_modules</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">module</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</code></pre></div>
+<p>Then use a name from that list:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAM</span>
+
+<span class="c1"># Use a layer that actually exists</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="s2">&quot;layer4&quot;</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>For most CNNs, the last convolutional block (<code>layer4</code> for ResNet, <code>features[-1]</code> for VGG/EfficientNet) gives the best heatmaps. torchxai selects this automatically when you do not specify <code>target_layer</code>.</p>
+<hr />
+<h3 id="valueerror-unknown-method-gradcam2-available-gradcam-eigencam-layercam-gradcam-attention_rollout-transformer_attribution"><code>ValueError: Unknown method 'gradcam2'. Available: gradcam, eigencam, layercam, gradcam++, attention_rollout, transformer_attribution</code><a class="headerlink" href="#valueerror-unknown-method-gradcam2-available-gradcam-eigencam-layercam-gradcam-attention_rollout-transformer_attribution" title="Permanent link">&para;</a></h3>
+<p><strong>Full error:</strong></p>
+<div class="highlight"><pre><span></span><code>ValueError: Unknown method &#39;gradcam2&#39;. Available: gradcam, eigencam, layercam, gradcam++, attention_rollout, transformer_attribution
+</code></pre></div>
+<p><strong>Cause:</strong> You passed a method name that torchxai does not recognize.</p>
+<p><strong>Fix:</strong> Use one of the exact strings listed in the error. All valid method names:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># All valid method strings</span>
+<span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gradcam&quot;</span><span class="p">)</span>               <span class="c1"># default</span>
+<span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;eigencam&quot;</span><span class="p">)</span>
+<span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;layercam&quot;</span><span class="p">)</span>
+<span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gradcam++&quot;</span><span class="p">)</span>
+<span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;attention_rollout&quot;</span><span class="p">)</span>
+<span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;transformer_attribution&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="runtimeerror-cant-call-numpy-on-tensor-that-requires-grad"><code>RuntimeError: Can't call numpy() on Tensor that requires grad</code><a class="headerlink" href="#runtimeerror-cant-call-numpy-on-tensor-that-requires-grad" title="Permanent link">&para;</a></h3>
+<p><strong>Full error:</strong></p>
+<div class="highlight"><pre><span></span><code>RuntimeError: Can&#39;t call numpy() on Tensor that requires grad. Use tensor.detach().numpy() instead.
+</code></pre></div>
+<p><strong>Cause:</strong> You tried to convert a tensor that still has an active gradient tape to a NumPy array.</p>
+<p><strong>Fix:</strong> Call <code>.detach()</code> before <code>.numpy()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Wrong</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>  <span class="c1"># raises RuntimeError</span>
+
+<span class="c1"># Correct</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+<span class="c1"># If the tensor is on GPU, also move it to CPU first</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</code></pre></div>
+<p>If this error occurs inside your own code that processes the explanation output:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+
+<span class="c1"># Access the raw heatmap tensor safely</span>
+<span class="n">heatmap_array</span> <span class="o">=</span> <span class="n">explanation</span><span class="o">.</span><span class="n">heatmap</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h3 id="cuda-out-of-memory"><code>CUDA out of memory</code><a class="headerlink" href="#cuda-out-of-memory" title="Permanent link">&para;</a></h3>
+<p><strong>Full error:</strong></p>
+<div class="highlight"><pre><span></span><code>torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate X MiB (GPU X; X GiB total capacity; X GiB already allocated)
+</code></pre></div>
+<p><strong>Cause:</strong> The explanation method requires gradient computation through the full model, and your GPU does not have enough memory for the image size or batch size you are using.</p>
+<p><strong>Fix — Option 1: Use EigenCAM (no gradients required)</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># EigenCAM uses PCA on activations — no backward pass, far lower memory usage</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;eigencam&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Fix — Option 2: Reduce image size</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># Resize before passing in</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Fix — Option 3: Use <code>torch.no_grad()</code> where possible</strong></p>
+<p>torchxai manages its own gradient context, but if you are running other GPU operations before calling <code>explain()</code>, free memory first:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># Clear the cache before explaining</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Fix — Option 4: Process on CPU</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s2">&quot;IMAGENET1K_V1&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>  <span class="c1"># Keep on CPU</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="common-mistakes">Common Mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h2>
+<h3 id="forgetting-modeleval">Forgetting <code>model.eval()</code><a class="headerlink" href="#forgetting-modeleval" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> Heatmaps look noisy or inconsistent between runs, even on the same image.</p>
+<p><strong>Cause:</strong> In training mode, dropout layers are active and batch normalization uses batch statistics, making outputs non-deterministic.</p>
+<p><strong>Fix:</strong> Always call <code>model.eval()</code> before generating explanations:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s2">&quot;IMAGENET1K_V1&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># &lt;-- required</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="passing-unnormalized-images-to-models-expecting-imagenet-normalization">Passing Unnormalized Images to Models Expecting ImageNet Normalization<a class="headerlink" href="#passing-unnormalized-images-to-models-expecting-imagenet-normalization" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> The model makes wrong predictions; the heatmap highlights irrelevant regions.</p>
+<p><strong>Cause:</strong> Most pretrained torchvision models expect inputs normalized with ImageNet mean <code>[0.485, 0.456, 0.406]</code> and standard deviation <code>[0.229, 0.224, 0.225]</code>. torchxai applies this normalization automatically when you pass a file path, PIL Image, or NumPy array. However, if you pass a raw <code>torch.Tensor</code>, torchxai assumes you have already normalized it.</p>
+<p><strong>Fix — Option 1: Let torchxai handle it</strong></p>
+<p>Pass a file path, PIL Image, or NumPy array and torchxai normalizes for you:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># torchxai preprocesses and normalizes automatically</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">pil_image</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">numpy_array</span><span class="p">)</span>  <span class="c1"># shape (H, W, C), values 0-255</span>
+</code></pre></div>
+<p><strong>Fix — Option 2: Normalize your tensor manually</strong></p>
+<p>If you must pass a tensor, normalize it first:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">T</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">normalize</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+
+<span class="c1"># Raw tensor with values in [0, 1]</span>
+<span class="n">raw_tensor</span> <span class="o">=</span> <span class="n">your_image_tensor</span>  <span class="c1"># shape (1, 3, H, W)</span>
+<span class="n">normalized_tensor</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">raw_tensor</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">normalized_tensor</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="wrong-tensor-shape-hwc-vs-chw-missing-batch-dimension">Wrong Tensor Shape (HWC vs CHW, Missing Batch Dimension)<a class="headerlink" href="#wrong-tensor-shape-hwc-vs-chw-missing-batch-dimension" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> <code>RuntimeError</code> about tensor dimensions, or explanations that look completely wrong.</p>
+<p><strong>Cause:</strong> PyTorch uses channel-first layout <code>(C, H, W)</code> or <code>(N, C, H, W)</code>. NumPy and PIL use channel-last <code>(H, W, C)</code>. Mixing these up causes silent errors.</p>
+<p><strong>Fix:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># NumPy arrays should be (H, W, C) — torchxai converts internally</span>
+<span class="n">numpy_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">numpy_image</span><span class="p">)</span>  <span class="c1"># correct</span>
+
+<span class="c1"># Tensors should be (C, H, W) or (1, C, H, W)</span>
+<span class="n">tensor_3d</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>    <span class="c1"># (C, H, W) — accepted</span>
+<span class="n">tensor_4d</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span> <span class="c1"># (N, C, H, W) — accepted</span>
+
+<span class="c1"># Wrong: (H, W, C) tensor</span>
+<span class="n">wrong_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># do not pass this</span>
+
+<span class="c1"># Fix: permute to (C, H, W) first</span>
+<span class="n">correct_tensor</span> <span class="o">=</span> <span class="n">wrong_tensor</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">correct_tensor</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="using-attention-methods-on-cnns-and-vice-versa">Using Attention Methods on CNNs (and Vice Versa)<a class="headerlink" href="#using-attention-methods-on-cnns-and-vice-versa" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> You get a warning message and the explanation method silently falls back to GradCAM.</p>
+<p><strong>Cause:</strong> <code>attention_rollout</code> and <code>transformer_attribution</code> require attention layers and do not work on CNNs. GradCAM, EigenCAM, LayerCAM, and GradCAM++ require convolutional layers and do not work on Vision Transformers.</p>
+<p><strong>Fix:</strong> Match the method to your architecture:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># CNN — use gradient-based or CAM methods</span>
+<span class="n">cnn</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s2">&quot;IMAGENET1K_V1&quot;</span><span class="p">)</span>
+<span class="n">cnn</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gradcam&quot;</span><span class="p">)</span>   <span class="c1"># correct</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;eigencam&quot;</span><span class="p">)</span>  <span class="c1"># correct</span>
+
+<span class="c1"># Vision Transformer — use attention-based methods</span>
+<span class="n">vit</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">vit_b_16</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s2">&quot;IMAGENET1K_V1&quot;</span><span class="p">)</span>
+<span class="n">vit</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">vit</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;attention_rollout&quot;</span><span class="p">)</span>      <span class="c1"># correct</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">vit</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;transformer_attribution&quot;</span><span class="p">)</span> <span class="c1"># correct</span>
+</code></pre></div>
+<hr />
+<h2 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h2>
+<h3 id="which-method-should-i-use">Which method should I use?<a class="headerlink" href="#which-method-should-i-use" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Recommended Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CNN, general use</td>
+<td><code>gradcam</code></td>
+</tr>
+<tr>
+<td>CNN, need speed</td>
+<td><code>eigencam</code></td>
+</tr>
+<tr>
+<td>CNN, multiple objects</td>
+<td><code>gradcam++</code></td>
+</tr>
+<tr>
+<td>CNN, need fine detail</td>
+<td><code>layercam</code></td>
+</tr>
+<tr>
+<td>Vision Transformer, general use</td>
+<td><code>attention_rollout</code></td>
+</tr>
+<tr>
+<td>Vision Transformer, highest quality</td>
+<td><code>transformer_attribution</code></td>
+</tr>
+</tbody>
+</table>
+<p>When in doubt, start with <code>gradcam</code>. It is the most well-studied method, works reliably across CNN architectures, and produces high-quality heatmaps.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="c1"># Sensible default for any CNN</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gradcam&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="does-it-work-with-my-custom-model">Does it work with my custom model?<a class="headerlink" href="#does-it-work-with-my-custom-model" title="Permanent link">&para;</a></h3>
+<p>Yes, as long as your model:</p>
+<ol>
+<li>Is a <code>torch.nn.Module</code> subclass (all PyTorch models are).</li>
+<li>Has at least one convolutional layer (for CAM methods) or attention layer (for attention methods).</li>
+<li>Accepts a batched image tensor <code>(1, C, H, W)</code> as input and returns a class score tensor.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAM</span><span class="p">,</span> <span class="n">show_explanation</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">AdaptiveAvgPool2d</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="c1"># Specify the target layer explicitly for custom models</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="s2">&quot;features.0&quot;</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+<span class="n">show_explanation</span><span class="p">(</span><span class="n">explanation</span><span class="p">)</span>
+</code></pre></div>
+<p>If you are unsure which layer to target, print all named modules as shown in the <a href="#attributeerror-x-has-no-attribute-y-available-layers-">AttributeError section</a> above.</p>
+<hr />
+<h3 id="can-i-use-it-on-a-gpu">Can I use it on a GPU?<a class="headerlink" href="#can-i-use-it-on-a-gpu" title="Permanent link">&para;</a></h3>
+<p>Yes. Move your model to the GPU before calling <code>explain()</code>. torchxai detects the device automatically:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s2">&quot;IMAGENET1K_V1&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">explanation</span><span class="o">.</span><span class="n">heatmap</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># cuda:0</span>
+</code></pre></div>
+<p>If you run out of GPU memory, see the <a href="#cuda-out-of-memory">CUDA out of memory</a> section above.</p>
+<hr />
+<h3 id="why-does-my-heatmap-look-uniform-or-blank">Why does my heatmap look uniform or blank?<a class="headerlink" href="#why-does-my-heatmap-look-uniform-or-blank" title="Permanent link">&para;</a></h3>
+<p>A blank or nearly-uniform heatmap (all one color) usually has one of these causes:</p>
+<p><strong>1. Model is not in eval mode</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># Always do this</span>
+</code></pre></div>
+<p><strong>2. The model's prediction is very low-confidence</strong></p>
+<p>If the model is not confident about any class, the gradients with respect to any class score will be near zero. Check the prediction first:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">T</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">transform</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">T</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)),</span>
+    <span class="n">T</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">T</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]),</span>
+<span class="p">])</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">top_prob</span><span class="p">,</span> <span class="n">top_class</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Top class: </span><span class="si">{</span><span class="n">top_class</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">, confidence: </span><span class="si">{</span><span class="n">top_prob</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>If confidence is below ~0.1, the model may not recognize the image (wrong normalization, out-of-distribution image, or wrong model).</p>
+<p><strong>3. You are targeting the wrong layer</strong></p>
+<p>Very early layers in a CNN contain low-level features (edges) and produce diffuse heatmaps. Target a later convolutional block:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAM</span>
+
+<span class="c1"># Use the last convolutional block for the most class-specific heatmap</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="s2">&quot;layer4&quot;</span><span class="p">)</span>  <span class="c1"># for ResNet</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>4. Image is not normalized correctly</strong></p>
+<p>See <a href="#passing-unnormalized-images-to-models-expecting-imagenet-normalization">Passing unnormalized images</a> above.</p>
+<hr />
+<h3 id="how-do-i-use-this-on-a-server-docker-ci">How do I use this on a server / Docker / CI?<a class="headerlink" href="#how-do-i-use-this-on-a-server-docker-ci" title="Permanent link">&para;</a></h3>
+<p>torchxai works on headless environments without any configuration. The only thing to avoid is calling <code>show_explanation()</code> without a display. Use file-based output instead:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span><span class="p">,</span> <span class="n">save_heatmap</span><span class="p">,</span> <span class="n">overlay_heatmap</span><span class="p">,</span> <span class="n">create_comparison</span>
+
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+
+<span class="c1"># All of these work on headless servers</span>
+<span class="n">save_heatmap</span><span class="p">(</span><span class="n">explanation</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;outputs/heatmap.png&quot;</span><span class="p">)</span>
+
+<span class="n">overlaid</span> <span class="o">=</span> <span class="n">overlay_heatmap</span><span class="p">(</span><span class="n">explanation</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">overlaid</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;outputs/overlaid.png&quot;</span><span class="p">)</span>
+
+<span class="n">create_comparison</span><span class="p">(</span><span class="n">explanation</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;outputs/comparison.png&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Docker:</strong> No special configuration needed. Install torchxai as normal in your <code>Dockerfile</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cpu
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>torchxai-explain
+</code></pre></div>
+<p><strong>GitHub Actions / CI:</strong> Same as above. Use <code>save_path</code> arguments everywhere instead of <code>show_explanation()</code>.</p>
+<hr />
+<h3 id="can-i-explain-object-detection-models">Can I explain object detection models?<a class="headerlink" href="#can-i-explain-object-detection-models" title="Permanent link">&para;</a></h3>
+<p>torchxai is primarily designed for image classification models. It can be applied to object detectors, but requires some adaptation since detection models do not output a single class score vector.</p>
+<p>The general approach is to wrap your detector to expose a classifiable output for a specific detected box:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchxai</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradCAM</span><span class="p">,</span> <span class="n">show_explanation</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DetectorWrapper</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wraps an object detector to expose the score of a specific detection.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">detector</span><span class="p">,</span> <span class="n">box_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">class_index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="n">detector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box_index</span> <span class="o">=</span> <span class="n">box_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_index</span> <span class="o">=</span> <span class="n">class_index</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># Return the score for the target box and class as a (1, 1) tensor</span>
+        <span class="c1"># Adjust this indexing to match your detector&#39;s output format</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;scores&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">box_index</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">score</span>
+
+<span class="c1"># Example usage (pseudo-code — adjust for your detector)</span>
+<span class="n">detector</span> <span class="o">=</span> <span class="n">your_object_detector</span>
+<span class="n">detector</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">wrapped</span> <span class="o">=</span> <span class="n">DetectorWrapper</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">box_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">class_index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">GradCAM</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="s2">&quot;backbone.layer4&quot;</span><span class="p">)</span>
+<span class="n">explanation</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span>
+<span class="n">show_explanation</span><span class="p">(</span><span class="n">explanation</span><span class="p">)</span>
+</code></pre></div>
+<p>Results will highlight the image region responsible for the selected detection.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../advanced/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Advanced Usage">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Advanced Usage
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rigvedrs/torchxai" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/torchxai-explain/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
